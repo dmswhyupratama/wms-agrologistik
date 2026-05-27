@@ -1,0 +1,18 @@
+# 1. Mengabaikan File Konfigurasi Database (SUPER PENTING)
+/app/config/config.php
+
+# 2. Mengabaikan Folder Upload (Biar file foto/dokumen user nggak ikut ke-push)
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# 3. Mengabaikan File Log Error PHP
+error_log
+*.log
+
+# 4. Mengabaikan File Sampah Bawaan Sistem Operasi (Mac & Windows)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 5. Mengabaikan Konfigurasi Code Editor (Biar settingan VSCode lu nggak nimpa settingan orang lain)
+.vscode/
