@@ -1,0 +1,10 @@
+Options -Indexes
+Options +FollowSymLinks
+RewriteEngine On
+
+# Kalau file atau folder beneran ada (kayak gambar/css), biarin diakses
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Kalau nggak ada, lempar semuanya ke index.php
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
