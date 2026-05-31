@@ -7,23 +7,23 @@ class Database {
     private $db_name = DB_NAME;
 
     private $dbh; // Database Handler
-    private $stmt; // Statement
+    private $stmt; // Statement Handler
 
     public function __construct()
     {
         // Data Source Name
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name;
         
-        // Optimasi koneksi PDO
+        // Optimasi PDO
         $option = [
-            PDO::ATTR_PERSISTENT => true, // Menjaga koneksi tetap hidup (bikin web lebih cepat)
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION // Menampilkan error jika query salah
+            PDO::ATTR_PERSISTENT => true, // Menjaga koneksi tetap stabil
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION // Menampilkan error jika query gagal
         ];
 
         try {
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $option);
         } catch(PDOException $e) {
-            die($e->getMessage()); // Hentikan sistem jika gagal konek
+            die("Koneksi Database Gagal: " . $e->getMessage()); // Hentikan sistem jika gagal konek
         }
     }
 
@@ -33,7 +33,7 @@ class Database {
         $this->stmt = $this->dbh->prepare($query);
     }
 
-    // Fungsi untuk mengikat data ke query (Mencegah SQL Injection)
+    // Fungsi untuk mengamankan data yang diinput (Mencegah SQL Injection)
     public function bind($param, $value, $type = null)
     {
         if( is_null($type) ) {
@@ -60,21 +60,21 @@ class Database {
         $this->stmt->execute();
     }
 
-    // Mengambil banyak data (contoh: list antrean ASN)
+    // Mengambil banyak baris data (contoh: list antrean masuk)
     public function resultSet()
     {
         $this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Mengambil satu data spesifik (contoh: data login user)
+    // Mengambil satu baris data spesifik (contoh: data login user)
     public function single()
     {
         $this->execute();
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Menghitung berapa baris data yang berubah (untuk cek sukses insert/update/delete)
+    // Menghitung berapa baris data yang terpengaruh (untuk cek sukses insert/update/delete)
     public function rowCount()
     {
         return $this->stmt->rowCount();

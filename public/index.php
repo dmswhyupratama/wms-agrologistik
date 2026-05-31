@@ -1,11 +1,9 @@
 <?php
-// Jalankan session agar kita bisa nyimpen data login user
-if( !session_id() ) {
-    session_start();
-}
+// Wajib ditaruh paling atas untuk mengaktifkan tiket masuk (session) bagi 6 aktor
+if( !session_id() ) session_start();
 
-// Panggil file inisialisasi yang ada di folder app
+// Panggil semua mesin dari folder app
 require_once '../app/init.php';
 
-// Jalankan mesin utama MVC
-$app = new App();
+// Instansiasi class App (Menyalakan mesin routing MVC!)
+$app = new App;
