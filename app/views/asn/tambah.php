@@ -6,14 +6,14 @@
         </div>
 
         <div class="card shadow-sm border-0 rounded-4 border-top border-success border-4">
-            <div class="card-body p-5">
-                <form action="<?= BASEURL; ?>/asn/prosesTambah" method="POST">
+            <div class="card-body p-4 p-md-5">
+                <form id="form-asn" action="<?= BASEURL; ?>/asn/prosesTambah" method="POST">
                     
                     <h5 class="fw-bold mb-3 text-secondary border-bottom pb-2">1. Input Jadwal Tiba</h5>
-                    <div class="row mb-4">
+                    <div class="row mb-5">
                         <div class="col-md-6">
                             <label for="tanggal" class="form-label fw-medium">Tanggal Rencana Tiba</label>
-                            <input type="date" class="form-control form-control-lg bg-light" id="tanggal" name="tanggal" required>
+                            <input type="date" class="form-control form-control-lg bg-light" id="tanggal" name="tanggal" min="<?= date('Y-m-d'); ?>" required>
                         </div>
                         <div class="col-md-6 mt-3 mt-md-0">
                             <label for="jam" class="form-label fw-medium">Jam Kedatangan</label>
@@ -21,22 +21,32 @@
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-3 text-secondary border-bottom pb-2 mt-5">2. Detail Komoditas & Muatan</h5>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label for="komoditas" class="form-label fw-medium">Pilih Komoditas</label>
-                            <select class="form-select form-select-lg bg-light" id="komoditas" name="komoditas" required>
-                                <option value="" disabled selected>-- Pilih Jenis --</option>
-                                <option value="Beras Premium">Beras Premium</option>
-                                <option value="Jagung Pakan">Jagung Pakan</option>
-                                <option value="Kedelai">Kedelai</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 mt-3 mt-md-0">
-                            <label for="estimasi_berat_kg" class="form-label fw-medium">Estimasi Berat (Kg)</label>
-                            <div class="input-group input-group-lg">
-                                <input type="number" step="0.01" class="form-control bg-light" id="estimasi_berat_kg" name="estimasi_berat_kg" required placeholder="Contoh: 1500.50">
-                                <span class="input-group-text">Kg</span>
+                    <div class="d-flex justify-content-between align-items-end border-bottom pb-2 mb-4">
+                        <h5 class="fw-bold text-secondary mb-0">2. Rincian Muatan Truk</h5>
+                        <button type="button" id="btn-tambah-baris" class="btn btn-sm btn-outline-success fw-bold">
+                            <i class="bi bi-plus-lg"></i> Tambah Barang
+                        </button>
+                    </div>
+
+                    <div id="komoditas-container">
+                        <div class="row mb-3 komoditas-row bg-white border rounded-3 p-3 position-relative shadow-sm">
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Pilih Komoditas</label>
+                                <select class="form-select form-select-lg bg-light" name="komoditas[]" required>
+                                    <option value="" disabled selected>-- Pilih Jenis --</option>
+                                    <option value="Beras Premium">Beras Premium</option>
+                                    <option value="Jagung Pakan">Jagung Pakan</option>
+                                    <option value="Kedelai">Kedelai</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5 mt-3 mt-md-0">
+                                <label class="form-label fw-medium">Estimasi Berat (Kg)</label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" step="0.01" class="form-control bg-light" name="estimasi_berat_kg[]" required placeholder="Contoh: 1500.50">
+                                    <span class="input-group-text">Kg</span>
+                                </div>
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end justify-content-center mt-3 mt-md-0 btn-hapus-container">
                             </div>
                         </div>
                     </div>
@@ -51,3 +61,46 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Fungsi Repeater Tambah Baris
+    document.getElementById('btn-tambah-baris').addEventListener('click', function() {
+        const container = document.getElementById('komoditas-container');
+        const firstRow = container.querySelector('.komoditas-row');
+        
+        const newRow = firstRow.cloneNode(true);
+
+        newRow.querySelector('select').value = '';
+        newRow.querySelector('input').value = '';
+
+        const btnHapusContainer = newRow.querySelector('.btn-hapus-container');
+        btnHapusContainer.innerHTML = '<button type="button" class="btn btn-outline-danger btn-lg btn-hapus" title="Hapus Baris"><i class="bi bi-trash3-fill"></i></button>';
+
+        btnHapusContainer.querySelector('.btn-hapus').addEventListener('click', function() {
+            newRow.remove();
+        });
+
+        container.appendChild(newRow);
+    });
+
+    // Validasi Cegah Duplikat sebelum Submit
+    document.getElementById('form-asn').addEventListener('submit', function(e) {
+        const selects = document.querySelectorAll('select[name="komoditas[]"]');
+        let selectedValues = [];
+        let hasDuplicate = false;
+
+        selects.forEach(function(select) {
+            let value = select.value;
+            if (value && selectedValues.includes(value)) {
+                hasDuplicate = true;
+            } else {
+                selectedValues.push(value);
+            }
+        });
+
+        if (hasDuplicate) {
+            e.preventDefault(); 
+            alert('Peringatan: Terdapat komoditas yang sama diinput lebih dari satu kali! Silakan gabungkan estimasi beratnya dalam satu baris, atau hapus baris yang berlebih.');
+        }
+    });
+</script>

@@ -20,7 +20,7 @@
 <?php elseif( $_SESSION['role'] == 'pemasok' ) : ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm mb-4">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="<?= BASEURL; ?>/home">🌱 Portal Mitra Agrologistik</a>
+            <a class="navbar-brand fw-bold text-truncate" style="max-width: 75%;" href="<?= BASEURL; ?>/home">🌱 Portal Mitra Agrologistik</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,7 +41,7 @@
 <?php else : ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="<?= BASEURL; ?>/home">🌱 WMS Internal</a>
+            <a class="navbar-brand fw-bold text-truncate" style="max-width: 50%;" href="<?= BASEURL; ?>/home">🌱 WMS Internal</a>
             <div class="d-flex align-items-center">
                 <span class="text-white me-3 d-none d-md-block">Halo, <?= $_SESSION['nama_lengkap']; ?>!</span>
                 <a class="btn btn-danger btn-sm fw-bold" href="<?= BASEURL; ?>/auth/logout"><i class="bi bi-box-arrow-right"></i> Logout</a>

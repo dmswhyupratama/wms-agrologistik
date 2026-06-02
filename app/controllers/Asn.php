@@ -45,6 +45,30 @@ class Asn extends Controller {
     // Proses penyimpanan data dari form
     public function prosesTambah()
     {
+        // -------------------------------------------------------------
+        // FIX FASE 2: VALIDASI TANGGAL MUNDUR (PAST DATE) DI BACKEND
+        // -------------------------------------------------------------
+        $tanggal_input = $_POST['tanggal'];
+        $tanggal_hari_ini = date('Y-m-d');
+
+        if( strtotime($tanggal_input) < strtotime($tanggal_hari_ini) ) {
+            Flasher::setFlash('Jadwal Kedatangan', 'gagal! Tanggal tidak boleh di masa lalu.', 'danger');
+            header('Location: ' . BASEURL . '/home');
+            exit; 
+        }
+        // -------------------------------------------------------------
+
+        // -------------------------------------------------------------
+        // FIX FASE 3: VALIDASI KOMODITAS DUPLIKAT (HUMAN ERROR)
+        // -------------------------------------------------------------
+        $komoditas_input = $_POST['komoditas'];
+        if( count($komoditas_input) !== count(array_unique($komoditas_input)) ) {
+            Flasher::setFlash('Jadwal Kedatangan', 'gagal! Anda memilih komoditas yang sama lebih dari satu kali.', 'danger');
+            header('Location: ' . BASEURL . '/home');
+            exit; 
+        }
+        // -------------------------------------------------------------
+
         // Panggil model dan lempar data form ($_POST) beserta ID user yang login
         if( $this->model('AsnModel')->tambahDataAsn($_POST, $_SESSION['id_user']) > 0 ) {
             Flasher::setFlash('Jadwal Kedatangan', 'berhasil diajukan!', 'success');
