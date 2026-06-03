@@ -1,9 +1,8 @@
 <?php if( !isset($_SESSION['id_user']) || $_SESSION['role'] == 'pemasok' ) : ?>
-    </div> 
-<?php else : ?>
-            </main> 
-        </div> </div> <?php endif; ?>
+    </div> <?php else : ?>
+            </main> </div> </div> <?php endif; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

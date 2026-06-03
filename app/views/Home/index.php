@@ -34,9 +34,17 @@
                         </p>
                         <?php 
                             $status_terakhir = $data['asn'][0]['status_jadwal'];
-                            if($status_terakhir == 'menunggu') echo '<span class="badge bg-warning text-dark fs-6"><i class="bi bi-hourglass-split me-1"></i> Sedang Menunggu Validasi</span>';
-                            elseif($status_terakhir == 'disetujui') echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle me-1"></i> Telah Disetujui</span>';
-                            else echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle me-1"></i> Ditolak</span>';
+                            if($status_terakhir == 'menunggu') {
+                                echo '<span class="badge bg-warning text-dark fs-6"><i class="bi bi-hourglass-split me-1"></i> Menunggu Validasi</span>';
+                            } elseif($status_terakhir == 'disetujui') {
+                                echo '<span class="badge bg-primary fs-6"><i class="bi bi-truck me-1"></i> Disetujui (Menuju Gudang)</span>';
+                            } elseif($status_terakhir == 'menunggu_qc') {
+                                echo '<span class="badge bg-info text-dark fs-6"><i class="bi bi-search me-1"></i> Sedang Inspeksi QC</span>';
+                            } elseif(in_array($status_terakhir, ['siap_putaway', 'in_storage', 'selesai'])) {
+                                echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle me-1"></i> Diterima (Lolos QC)</span>';
+                            } else {
+                                echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle me-1"></i> Ditolak / Retur</span>';
+                            }
                         ?>
                     <?php endif; ?>
 
@@ -85,14 +93,20 @@
                                         <td>
                                             <?php 
                                                 if($asn['status_jadwal'] == 'menunggu') {
-                                                    echo '<span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i> Menunggu</span>';
+                                                    echo '<span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i> Menunggu Validasi</span>';
                                                     $instruksi = "Tunggu konfirmasi admin";
                                                 } elseif($asn['status_jadwal'] == 'disetujui') {
-                                                    echo '<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Disetujui</span>';
-                                                    $instruksi = "<span class='text-success fw-bold'>Kirim armada ke gudang</span>";
+                                                    echo '<span class="badge bg-primary"><i class="bi bi-truck me-1"></i> Disetujui (Menuju Gudang)</span>';
+                                                    $instruksi = "<span class='text-primary fw-bold'>Kirim armada ke gudang</span>";
+                                                } elseif($asn['status_jadwal'] == 'menunggu_qc') {
+                                                    echo '<span class="badge bg-info text-dark"><i class="bi bi-search me-1"></i> Sedang Inspeksi QC</span>';
+                                                    $instruksi = "Tunggu hasil QC";
+                                                } elseif(in_array($asn['status_jadwal'], ['siap_putaway', 'in_storage', 'selesai'])) {
+                                                    echo '<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Diterima (Lolos QC)</span>';
+                                                    $instruksi = "<span class='text-success fw-bold'>Barang masuk gudang</span>";
                                                 } else {
-                                                    echo '<span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i> Ditolak</span>';
-                                                    $instruksi = "<span class='text-danger'>Ajukan jadwal ulang</span>";
+                                                    echo '<span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i> Ditolak / Retur</span>';
+                                                    $instruksi = "<span class='text-danger'>Ajukan jadwal ulang / Retur</span>";
                                                 }
                                             ?>
                                         </td>
