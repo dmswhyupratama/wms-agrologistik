@@ -75,7 +75,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= ($data['judul'] == 'Antrean Putaway') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/admin/putaway">
+            <a class="nav-link <?= ($data['judul'] == 'Antrean Putaway' || $data['judul'] == 'Alokasi Rak & Cetak Batch' || $data['judul'] == 'Cetak Barcode SKU') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/admin/putaway">
                 <i class="bi bi-layers me-2"></i> Antrean Putaway
             </a>
         </li>
@@ -85,6 +85,14 @@
         <li class="nav-item">
             <a class="nav-link <?= ($data['judul'] == 'Quality Control') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/qc">
                 <i class="bi bi-clipboard-check me-2"></i> Quality Control
+            </a>
+        </li>
+        <?php endif; ?>
+        
+        <?php if($_SESSION['role'] == 'admin_penjualan') : ?>
+        <li class="nav-item">
+            <a class="nav-link <?= ($data['judul'] == 'Manajemen Sales Order' || $data['judul'] == 'Buat Pesanan Baru') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/penjualan">
+                <i class="bi bi-cart-check me-2"></i> Sales Order
             </a>
         </li>
         <?php endif; ?>
