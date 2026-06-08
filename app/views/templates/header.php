@@ -105,7 +105,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if(in_array($_SESSION['role'], ['admin_penjualan', 'kru_lapangan', 'admin_gudang'])) : ?>
+        <?php if(in_array($_SESSION['role'], ['admin_gudang', 'kru_lapangan', 'manajer'])) : ?>
         <li class="nav-item">
             <a class="nav-link <?= ($data['judul'] == 'Outbound') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/outbound">
                 <i class="bi bi-truck me-2"></i> Outbound
@@ -113,13 +113,21 @@
         </li>
         <?php endif; ?>
 
-        <?php if($_SESSION['role'] == 'manajer') : ?>
+        <?php if(in_array($_SESSION['role'], ['kru_lapangan', 'qc', 'manajer'])) : ?>
         <li class="nav-item">
-            <a class="nav-link <?= ($data['judul'] == 'Laporan') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/laporan">
-                <i class="bi bi-graph-up-arrow me-2"></i> Laporan (Waste)
+            <a class="nav-link <?= ($data['judul'] == 'Manajemen Waste') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/waste">
+                <i class="bi bi-trash3 me-2"></i> Manajemen Waste
             </a>
         </li>
         <?php endif; ?>
+
+        <?php if($_SESSION['role'] == 'manajer') : ?>
+        <li class="nav-item mt-3"> <a class="nav-link <?= ($data['judul'] == 'Manajemen Pegawai') ? 'bg-success text-white rounded shadow-sm' : 'text-dark fw-medium'; ?>" href="<?= BASEURL; ?>/pegawai">
+                <i class="bi bi-people-fill me-2"></i> Manajemen Pegawai
+            </a>
+        </li>
+        <?php endif; ?>
+
     </ul>
     <?php $menu_sidebar = ob_get_clean(); // Selesai merekam menu ?>
 

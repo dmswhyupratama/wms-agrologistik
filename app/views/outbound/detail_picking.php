@@ -46,7 +46,7 @@
                             </div>
 
                             <h5 class="fw-bold text-dark mb-1"><?= $item['komoditas']; ?></h5>
-                            <p class="text-muted small mb-3"><i class="bi bi-upc-scan me-1"></i>SKU: <?= $item['kode_sku']; ?></p>
+                            <p class="text-muted small mb-3"><i class="bi bi-upc-scan me-1"></i>SKU Target: <strong class="text-dark"><?= $item['kode_sku']; ?></strong></p>
                             
                             <div class="bg-light rounded-3 p-3 mb-4 text-center">
                                 <span class="d-block text-muted small fw-bold mb-1">Ambil Sebanyak:</span>
@@ -54,11 +54,30 @@
                             </div>
 
                             <?php if($item['status_picking'] == 'belum') : ?>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">Scan Barcode untuk Validasi:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white"><i class="bi bi-upc-scan"></i></span>
+                                        <input type="text" class="form-control text-center fw-bold input-barcode" 
+                                               data-target="<?= $item['kode_sku']; ?>" 
+                                               data-btn="btn-ambil-<?= $item['id_picking']; ?>" 
+                                               placeholder="Arahkan scanner ke sini..." autocomplete="off">
+                                    </div>
+                                    <div class="form-text text-danger small mt-1 d-none" id="error-<?= $item['id_picking']; ?>">
+                                        <i class="bi bi-exclamation-triangle me-1"></i>SKU Tidak Cocok!
+                                    </div>
+                                </div>
+
                                 <div class="d-grid">
-                                    <a href="<?= BASEURL; ?>/outbound/konfirmasiAmbil/<?= $item['id_picking']; ?>/<?= $data['id_so']; ?>" class="btn btn-primary btn-lg fw-bold rounded-pill" onclick="return confirm('Konfirmasi bahwa barang ini telah diambil secara fisik dari rak?');">
-                                        <i class="bi bi-check2-circle me-2"></i>Selesai Ambil
+                                    <a href="<?= BASEURL; ?>/outbound/konfirmasiAmbil/<?= $item['id_picking']; ?>/<?= $data['id_so']; ?>" 
+                                       class="btn btn-primary btn-lg fw-bold rounded-pill disabled action-btn" 
+                                       id="btn-ambil-<?= $item['id_picking']; ?>" 
+                                       onclick="return confirm('Konfirmasi bahwa barang ini telah diambil secara fisik dari rak?');">
+                                        <i class="bi bi-lock-fill me-2" id="icon-<?= $item['id_picking']; ?>"></i>Selesai Ambil
                                     </a>
                                 </div>
+
                             <?php else : ?>
                                 <div class="d-grid">
                                     <button class="btn btn-success btn-lg fw-bold rounded-pill" disabled>
@@ -74,3 +93,50 @@
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.input-barcode').forEach(input => {
+        input.addEventListener('keyup', function() {
+            let inputVal = this.value.trim().toUpperCase(); // Tangkap inputan & kapitalisasi
+            let targetSKU = this.getAttribute('data-target').toUpperCase(); // Target SKU dari database
+            let btnId = this.getAttribute('data-btn');
+            
+            let btnAction = document.getElementById(btnId);
+            let iconBtn = document.getElementById('icon-' + btnId.replace('btn-ambil-', ''));
+            let errorMsg = document.getElementById('error-' + btnId.replace('btn-ambil-', ''));
+
+            // Jika input belum terisi, diamkan saja
+            if(inputVal === '') {
+                btnAction.classList.add('disabled');
+                errorMsg.classList.add('d-none');
+                iconBtn.className = 'bi bi-lock-fill me-2';
+                return;
+            }
+
+            // LOGIKA MATCHING
+            if(inputVal === targetSKU) {
+                // Barcode Valid! Buka gembok tombol
+                btnAction.classList.remove('disabled');
+                btnAction.classList.replace('btn-primary', 'btn-success'); // Ganti warna jadi hijau
+                errorMsg.classList.add('d-none');
+                
+                // Ubah icon gembok jadi icon ceklis
+                iconBtn.className = 'bi bi-unlock-fill me-2';
+                
+                // Opsional: Beri efek visual sukses pada input text
+                this.classList.add('is-valid');
+                this.classList.remove('is-invalid');
+            } else {
+                // Barcode Salah! Kunci kembali tombol
+                btnAction.classList.add('disabled');
+                btnAction.classList.replace('btn-success', 'btn-primary');
+                errorMsg.classList.remove('d-none');
+                
+                iconBtn.className = 'bi bi-lock-fill me-2';
+                
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+            }
+        });
+    });
+</script>

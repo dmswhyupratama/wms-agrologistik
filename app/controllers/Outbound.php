@@ -4,8 +4,12 @@ class Outbound extends Controller {
 
     public function index()
     {
-        // Proteksi Akses
-        if( !isset($_SESSION['id_user']) ) {
+        // ===========================================================
+        // BUG FIX: PROTEKSI KETAT HAK AKSES HALAMAN UTAMA OUTBOUND
+        // ===========================================================
+        $allowed_roles = ['kru_lapangan', 'admin_gudang', 'manajer'];
+        if( !isset($_SESSION['id_user']) || !in_array($_SESSION['role'], $allowed_roles) ) {
+            // Jika bukan role yang diizinkan, tendang kembali ke Home
             header('Location: ' . BASEURL . '/home');
             exit;
         }
@@ -41,7 +45,7 @@ class Outbound extends Controller {
     public function detailPicking($id_so)
     {
         // ===========================================================
-        // BUG FIX: PROTEKSI KETAT HANYA UNTUK KRU LAPANGAN
+        // PROTEKSI KETAT HANYA UNTUK KRU LAPANGAN
         // ===========================================================
         if( !isset($_SESSION['id_user']) || $_SESSION['role'] != 'kru_lapangan' ) {
             Flasher::setFlash('Akses Ditolak!', 'Halaman konfirmasi rak khusus untuk Kru Lapangan.', 'danger');
@@ -62,7 +66,7 @@ class Outbound extends Controller {
     public function konfirmasiAmbil($id_picking, $id_so)
     {
         // ===========================================================
-        // BUG FIX: ADMIN GUDANG DIHAPUS DARI IZIN OTORISASI FUNGSI INI
+        // ADMIN GUDANG DIHAPUS DARI IZIN OTORISASI FUNGSI INI
         // ===========================================================
         if( !isset($_SESSION['id_user']) || $_SESSION['role'] != 'kru_lapangan' ) {
             header('Location: ' . BASEURL . '/outbound');
