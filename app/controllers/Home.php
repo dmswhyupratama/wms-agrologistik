@@ -55,9 +55,11 @@ class Home extends Controller {
         // =====================================================================
         elseif($_SESSION['role'] == 'admin_gudang') {
             $data['statistik'] = $this->model('DashboardModel')->getStatistikAdminGudang();
+            $data['recent_inbound'] = $this->model('DashboardModel')->getRecentInbound();
+            $data['recent_outbound'] = $this->model('DashboardModel')->getRecentOutbound();
             
             $this->view('templates/header', $data);
-            $this->view('home/admin_gudang', $data); // Arahkan ke UI khusus Admin Gudang
+            $this->view('home/admin_gudang', $data);
             $this->view('templates/footer');
         }
         // =====================================================================

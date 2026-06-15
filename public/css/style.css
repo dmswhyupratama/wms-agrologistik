@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* ===== GREEN & WHITE — REFINED ===== */
+    --green-900: #14532D;
+    --green-800: #166534;
+    --green-700: #15803D;
+    --green-600: #16A34A;
+    --green-500: #22C55E;
+    --green-400: #4ADE80;
+    --green-200: #BBF7D0;
+    --green-100: #DCFCE7;
+    --green-50:  #F0FDF4;
+
+    --white: #FFFFFF;
+    --gray-50:  #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-500: #6B7280;
+    --gray-600: #4B5563;
+    --gray-700: #374151;
+    --gray-800: #1F2937;
+    --gray-900: #111827;
+
+    /* Semantic */
+    --bg-app: var(--gray-50);
+    --surface: var(--white);
+    --text-primary: var(--gray-900);
+    --text-secondary: var(--gray-500);
+    --border-color: var(--gray-200);
+    --primary: var(--green-600);
+    --primary-dark: var(--green-800);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.05), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,.06), 0 2px 4px -2px rgba(0,0,0,.04);
+    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,.08), 0 8px 10px -6px rgba(0,0,0,.03);
+    --shadow-green: 0 4px 14px rgba(22, 163, 74, .2);
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+}
+
+/* ===== BASE ===== */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+p { color: var(--text-secondary); }
+
+/* ===== BOOTSTRAP OVERRIDES ===== */
+.bg-success  { background-color: var(--primary) !important; }
+.text-success { color: var(--primary) !important; }
+.border-success { border-color: var(--primary) !important; }
+
+/* ===== NAVBAR — Solid Green Bar ===== */
+.navbar-green {
+    background: linear-gradient(135deg, var(--green-900) 0%, var(--green-800) 100%);
+    border-bottom: 3px solid var(--green-600);
+    padding: 0.7rem 1rem;
+    box-shadow: 0 2px 10px rgba(20, 83, 45, .2);
+}
+
+.navbar-green .navbar-brand {
+    color: var(--white) !important;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-size: 1.1rem;
+}
+
+.navbar-green .navbar-brand i { color: var(--green-400); }
+
+.navbar-green .nav-link {
+    color: rgba(255,255,255,.8);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.navbar-green .nav-link:hover,
+.navbar-green .nav-link.active { color: var(--white); }
+
+.nav-text-light { color: rgba(255,255,255,.75) !important; }
+.nav-text-light strong { color: var(--white); }
+
+/* ===== SIDEBAR — White + Green Accents ===== */
+.sidebar-green {
+    background-color: var(--surface);
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-green .nav-link {
+    color: var(--gray-600);
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.55rem 0.9rem;
+    margin: 2px 0.6rem;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
+}
+
+.sidebar-green .nav-link i {
+    font-size: 1rem;
+    width: 22px;
+    text-align: center;
+}
+
+.sidebar-green .nav-link:hover {
+    color: var(--green-700);
+    background-color: var(--green-50);
+    border-left-color: var(--green-200);
+}
+
+.sidebar-green .nav-link.active-menu {
+    color: var(--green-800);
+    background-color: var(--green-50);
+    border-left-color: var(--green-600);
+    font-weight: 700;
+}
+
+.sidebar-green .sidebar-label {
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    color: var(--gray-400);
+    padding: 0 0.9rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* ===== CARDS ===== */
+.card-clean {
+    background-color: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-clean:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Green CTA Card */
+.card-green {
+    background: linear-gradient(135deg, var(--green-700) 0%, var(--green-500) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-green);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-green::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.card-green:hover {
+    box-shadow: 0 8px 25px rgba(22, 163, 74, .3);
+    transform: translateY(-2px);
+}
+
+/* Stat Card */
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stat-icon-green  { background: var(--green-100); color: var(--green-700); }
+.stat-icon-amber  { background: #FEF3C7; color: #D97706; }
+.stat-icon-blue   { background: #DBEAFE; color: #2563EB; }
+
+/* ===== BADGES ===== */
+.badge-soft {
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.35em 0.75em;
+    border-radius: 50px;
+}
+
+.badge-soft-success  { background: var(--green-100); color: var(--green-700); }
+.badge-soft-warning  { background: #FEF3C7; color: #92400E; }
+.badge-soft-primary  { background: #DBEAFE; color: #1E40AF; }
+.badge-soft-danger   { background: #FEE2E2; color: #991B1B; }
+.badge-soft-info     { background: #E0F2FE; color: #075985; }
+.badge-soft-secondary{ background: var(--gray-100); color: var(--gray-700); }
+
+/* ===== BUTTONS ===== */
+.btn-white-pill {
+    background: var(--white);
+    color: var(--green-800);
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    transition: all 0.2s;
+    padding: 0.5rem 1.25rem;
+}
+
+.btn-white-pill:hover {
+    background: var(--white);
+    color: var(--green-900);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.btn-green {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.25rem;
+    box-shadow: 0 2px 6px rgba(22,163,74,.25);
+    transition: all 0.2s;
+}
+
+.btn-green:hover {
+    background: var(--green-700);
+    color: white;
+    box-shadow: 0 4px 12px rgba(22,163,74,.3);
+}
+
+/* ===== TABLES ===== */
+.table-clean th {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--gray-400);
+    border-bottom: 2px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    background: var(--gray-50);
+}
+
+.table-clean td {
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+}
+
+.table-clean tbody tr:hover { background: var(--green-50); }
+.table-clean tr:last-child td { border-bottom: none; }
+
+/* ===== ALERT ===== */
+.alert-green-light {
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    color: var(--green-800);
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-clean {
+    height: 12px;
+    background-color: var(--gray-200);
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+}
+
+.progress-clean .progress-bar {
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--green-500) 0%, var(--green-400) 100%);
+    transition: width 1s ease-in-out;
+}
+
+/* ===== HOVER ELEVATE ===== */
+.hover-elevate {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-elevate:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--green-400) !important;
+    background-color: var(--green-50) !important;
+}
+
+/* Quick Action Buttons */
+.quick-action-btn {
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+.quick-action-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* ===== UTILITY ===== */
+.text-green-dark { color: var(--green-800) !important; }
+.text-green      { color: var(--primary) !important; }
+.bg-green-light  { background: var(--green-50) !important; }

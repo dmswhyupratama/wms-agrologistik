@@ -147,25 +147,70 @@ class DashboardModel {
     public function getStatistikAdminGudang()
     {
         // 1. Antrean Inbound (Truk Pemasok yang datang dan menunggu dibongkar/QC)
-        // Menggunakan tabel 'asn_header' sesuai struktur DB asli
-        $this->db->query("SELECT COUNT(id_asn) as total FROM asn_header WHERE status_jadwal IN ('menunggu', 'menunggu_qc')");
+        $this->db->query("SELECT COUNT(id_asn) as total FROM asn_header WHERE status_jadwal IN ('menunggu', 'disetujui', 'menunggu_qc')");
         $inbound = $this->db->single()['total'] ?? 0;
 
         // 2. Antrean Putaway (Barang lulus QC yang terdampar di staging area / belum punya rak)
-        // Menggunakan tabel 'asn_detail' dengan status 'siap_putaway'
         $this->db->query("SELECT COUNT(id_detail) as total FROM asn_detail WHERE status_item = 'siap_putaway'");
         $putaway = $this->db->single()['total'] ?? 0;
 
         // 3. Antrean Ekspedisi (Pesanan SO yang sudah selesai di-picking Kru, tinggal panggil truk)
-        // Menggunakan tabel 'sales_order'
         $this->db->query("SELECT COUNT(id_so) as total FROM sales_order WHERE status_pesanan = 'siap_kirim'");
         $ekspedisi = $this->db->single()['total'] ?? 0;
+
+        // 4. Kapasitas Gudang: berat terpakai vs kapasitas total
+        $this->db->query("SELECT COALESCE(SUM(berat_aktif_kg), 0) as terpakai FROM stok_gudang WHERE status_stok IN ('tersedia', 'karantina')");
+        $berat_terpakai = (float) $this->db->single()['terpakai'];
+
+        $this->db->query("SELECT COALESCE(SUM(kapasitas_maksimal_kg), 0) as total_kapasitas FROM master_rak");
+        $kapasitas_total = (float) $this->db->single()['total_kapasitas'];
+
+        $persen_kapasitas = ($kapasitas_total > 0) ? round(($berat_terpakai / $kapasitas_total) * 100, 1) : 0;
+
+        // 5. Jumlah rak terisi vs total rak
+        $this->db->query("SELECT COUNT(DISTINCT lokasi_rak) as rak_terisi FROM stok_gudang WHERE status_stok IN ('tersedia', 'karantina')");
+        $rak_terisi = $this->db->single()['rak_terisi'] ?? 0;
+
+        $this->db->query("SELECT COUNT(id_rak) as total_rak FROM master_rak");
+        $total_rak = $this->db->single()['total_rak'] ?? 0;
 
         return [
             'inbound' => $inbound,
             'putaway' => $putaway,
-            'ekspedisi' => $ekspedisi
+            'ekspedisi' => $ekspedisi,
+            'berat_terpakai' => $berat_terpakai,
+            'kapasitas_total' => $kapasitas_total,
+            'persen_kapasitas' => $persen_kapasitas,
+            'rak_terisi' => $rak_terisi,
+            'total_rak' => $total_rak
         ];
+    }
+
+    // Mengambil 5 ASN Inbound terbaru beserta nama pemasok
+    public function getRecentInbound()
+    {
+        $this->db->query("SELECT h.id_asn, h.waktu_rencana_tiba, h.status_jadwal, h.created_at,
+                                 u.nama_lengkap as nama_pemasok,
+                                 COUNT(d.id_detail) as jumlah_item,
+                                 GROUP_CONCAT(DISTINCT d.komoditas SEPARATOR ', ') as daftar_komoditas
+                          FROM asn_header h
+                          JOIN users u ON h.id_pemasok = u.id_user
+                          LEFT JOIN asn_detail d ON h.id_asn = d.id_asn
+                          GROUP BY h.id_asn
+                          ORDER BY h.created_at DESC
+                          LIMIT 5");
+        return $this->db->resultSet();
+    }
+
+    // Mengambil 5 Sales Order Outbound terbaru
+    public function getRecentOutbound()
+    {
+        $this->db->query("SELECT so.id_so, so.nama_klien, so.komoditas_dipesan, 
+                                 so.total_diminta_kg, so.status_pesanan, so.created_at
+                          FROM sales_order so
+                          ORDER BY so.created_at DESC
+                          LIMIT 5");
+        return $this->db->resultSet();
     }
 
     // ==========================================================
