@@ -8,30 +8,46 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="<?= BASEURL; ?>/css/style.css">
 </head>
-<body>
+<body class="bg-light">
 
 <?php if( !isset($_SESSION['id_user']) ) : ?>
-    <nav class="navbar navbar-expand-lg navbar-green">
+    <nav class="navbar navbar-expand-lg navbar-green shadow-sm py-2">
         <div class="container">
-            <a class="navbar-brand" href="<?= BASEURL; ?>"><i class="bi bi-box-seam me-2"></i>WMS Agrologistik</a>
+            <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="<?= BASEURL; ?>">
+                <div class="bg-white text-green rounded-2 p-1 me-2 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                    <i class="bi bi-box-seam fs-5"></i>
+                </div>
+                <span style="letter-spacing: -0.5px;">WMS Agrologistik</span>
+            </a>
         </div>
     </nav>
     <div class="container mt-4">
 
 <?php elseif( $_SESSION['role'] == 'pemasok' ) : ?>
-    <nav class="navbar navbar-expand-lg navbar-green">
+    <nav class="navbar navbar-expand-lg navbar-green shadow-sm py-2 sticky-top" style="z-index: 1050;">
         <div class="container">
-            <a class="navbar-brand text-truncate" style="max-width: 75%;" href="<?= BASEURL; ?>/home"><i class="bi bi-box-seam me-2"></i>Portal Mitra Agrologistik</a>
-            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <i class="bi bi-list text-white fs-2"></i>
+            <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="<?= BASEURL; ?>/home">
+                <div class="bg-white text-green rounded-2 p-1 me-2 d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                    <i class="bi bi-box-seam fs-5"></i>
+                </div>
+                <span class="d-none d-sm-inline" style="letter-spacing: -0.5px;">Portal Mitra Agrologistik</span>
+                <span class="d-inline d-sm-none" style="letter-spacing: -0.5px;">Portal Mitra</span>
+            </a>
+            
+            <button class="navbar-toggler border-0 shadow-none text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list fs-2"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link text-white <?= ($data['judul'] == 'Dashboard') ? 'active fw-bold' : 'opacity-75'; ?>" href="<?= BASEURL; ?>/home">Beranda</a>
+                        <a class="btn btn-white-pill rounded-pill btn-sm px-3 fw-bold d-inline-flex align-items-center" href="<?= BASEURL; ?>/home">
+                            <i class="bi bi-house-door me-1"></i> Beranda
+                        </a>
                     </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="btn btn-white-pill btn-sm px-3" href="<?= BASEURL; ?>/auth/logout"><i class="bi bi-box-arrow-right me-1"></i> Logout</a>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-white-pill rounded-pill btn-sm px-3 fw-bold d-inline-flex align-items-center" href="<?= BASEURL; ?>/auth/logout">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -40,17 +56,29 @@
     <div class="container mt-4">
 
 <?php else : ?>
-    <nav class="navbar navbar-expand-lg navbar-green sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-green shadow-sm sticky-top py-2" style="z-index: 1050;">
         <div class="container-fluid px-3">
             <button class="navbar-toggler d-md-none me-2 border-0 shadow-none text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMobile" aria-controls="sidebarMobile">
                 <i class="bi bi-list fs-2"></i>
             </button>
 
-            <a class="navbar-brand text-truncate" style="max-width: 50%;" href="<?= BASEURL; ?>/home"><i class="bi bi-box-seam me-2"></i>WMS Internal</a>
+            <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="<?= BASEURL; ?>/home">
+                <div class="bg-white text-green rounded-2 p-1 me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                    <i class="bi bi-box-seam fs-5"></i>
+                </div>
+                <span class="d-none d-sm-inline" style="letter-spacing: -0.5px;">WMS Internal</span>
+                <span class="d-inline d-sm-none" style="letter-spacing: -0.5px;">WMS</span>
+            </a>
             
-            <div class="d-flex align-items-center">
-                <span class="nav-text-light me-3 d-none d-md-block">Halo, <strong><?= $_SESSION['nama_lengkap']; ?></strong>!</span>
-                <a class="btn btn-white-pill btn-sm px-3" href="<?= BASEURL; ?>/auth/logout"><i class="bi bi-power"></i> <span class="d-none d-sm-inline ms-1">Keluar</span></a>
+            <div class="d-flex align-items-center ms-auto">
+                <div class="d-none d-md-flex align-items-center me-3 border border-white border-opacity-25 rounded-pill pe-3 ps-2 py-1" style="background: rgba(255,255,255,0.1);">
+                    <i class="bi bi-person-circle fs-5 text-white opacity-75 me-2"></i>
+                    <span class="nav-text-light fw-medium" style="font-size: 0.85rem;">Halo, <strong class="text-white"><?= explode(' ', trim($_SESSION['nama_lengkap']))[0]; ?></strong></span>
+                </div>
+                
+                <a class="btn btn-sm btn-white-pill rounded-pill px-3 fw-bold d-flex align-items-center" href="<?= BASEURL; ?>/auth/logout">
+                    <i class="bi bi-box-arrow-right me-1"></i> <span class="d-none d-sm-inline">Keluar</span>
+                </a>
             </div>
         </div>
     </nav>

@@ -19,244 +19,219 @@
     }
 ?>
 
-<div class="container-fluid mt-3 mb-5">
+<div class="container-fluid mt-4 mb-5 px-lg-4">
     
-    <!-- HEADER -->
-    <div class="row mb-4">
-        <div class="col-12 d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <div>
-                <h2 class="fw-bold mb-1">Selamat Datang, <span class="text-green"><?= explode(' ', trim($_SESSION['nama_lengkap']))[0]; ?></span>! 🚦</h2>
-                <p class="text-muted mb-0">Pantau arus lalu lintas bongkar muat dan alokasi rak gudang hari ini.</p>
+    <!-- HEADER & AKSI CEPAT -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <h2 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.5px;">Overview</h2>
+                <span class="badge bg-green-light text-green-dark border px-2 py-1 fs-7 rounded-pill fw-medium">Admin Gudang</span>
             </div>
-            <span class="badge bg-dark px-3 py-2 fs-6"><i class="bi bi-person-badge me-2"></i>ADMIN GUDANG</span>
+            <p class="text-muted mb-0" style="font-size: 0.95rem;">Selamat datang kembali, <strong class="text-dark"><?= explode(' ', trim($_SESSION['nama_lengkap']))[0]; ?></strong>. Pantau aktivitas gudang hari ini.</p>
+        </div>
+        
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <a href="<?= BASEURL; ?>/admin/inbound" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm">
+                <i class="bi bi-box-arrow-in-down me-1"></i> Inbound
+            </a>
+            <a href="<?= BASEURL; ?>/admin/putaway" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm">
+                <i class="bi bi-layers me-1"></i> Putaway
+            </a>
+            <a href="<?= BASEURL; ?>/outbound" class="btn btn-sm btn-green rounded-pill px-3 fw-medium shadow-sm">
+                <i class="bi bi-truck me-1"></i> Outbound (DO)
+            </a>
         </div>
     </div>
 
-    <hr class="mb-4 opacity-25">
-
-    <!-- BARIS 1: 4 KARTU STATISTIK -->
-    <div class="row g-3 mb-4">
+    <!-- STATISTIK (4 KARTU) -->
+    <div class="row g-4 mb-5">
         
-        <!-- Kartu Inbound -->
+        <!-- Inbound -->
         <div class="col-md-6 col-lg-3">
-            <div class="card card-clean h-100">
-                <div class="card-body p-4">
+            <div class="card border-0 rounded-4 shadow-sm h-100 bg-white hover-elevate">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h6 class="text-muted fw-bold mb-0" style="font-size: 0.8rem;">Antrean Inbound</h6>
-                        <div class="stat-icon stat-icon-green"><i class="bi bi-box-arrow-in-down"></i></div>
+                        <div>
+                            <p class="text-muted mb-1 fw-medium" style="font-size: 0.85rem;">Antrean Inbound</p>
+                            <h2 class="fw-bold text-dark mb-0"><?= $stat['inbound']; ?></h2>
+                        </div>
+                        <div class="stat-icon stat-icon-green rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-box-arrow-in-down"></i></div>
                     </div>
-                    <h2 class="fw-bold text-dark mb-1"><?= $stat['inbound']; ?></h2>
-                    <small class="text-muted">Truk / ASN menunggu</small>
-                    <div class="mt-3">
-                        <a href="<?= BASEURL; ?>/admin/inbound" class="small text-decoration-none fw-bold text-green">
-                            Proses Kedatangan <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
+                    <a href="<?= BASEURL; ?>/admin/inbound" class="text-decoration-none fw-semibold text-green mt-2" style="font-size: 0.85rem;">
+                        Proses Kedatangan <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Kartu Putaway -->
+        <!-- Putaway -->
         <div class="col-md-6 col-lg-3">
-            <div class="card card-clean h-100">
-                <div class="card-body p-4">
+            <div class="card border-0 rounded-4 shadow-sm h-100 bg-white hover-elevate">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h6 class="text-muted fw-bold mb-0" style="font-size: 0.8rem;">Antrean Putaway</h6>
-                        <div class="stat-icon stat-icon-amber"><i class="bi bi-layers-fill"></i></div>
+                        <div>
+                            <p class="text-muted mb-1 fw-medium" style="font-size: 0.85rem;">Antrean Putaway</p>
+                            <h2 class="fw-bold text-dark mb-0"><?= $stat['putaway']; ?></h2>
+                        </div>
+                        <div class="stat-icon stat-icon-amber rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-layers-fill"></i></div>
                     </div>
-                    <h2 class="fw-bold text-dark mb-1"><?= $stat['putaway']; ?></h2>
-                    <small class="text-muted">Batch perlu alokasi rak</small>
-                    <div class="mt-3">
-                        <a href="<?= BASEURL; ?>/admin/putaway" class="small text-decoration-none fw-bold text-green">
-                            Cetak Barcode & Alokasi <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
+                    <a href="<?= BASEURL; ?>/admin/putaway" class="text-decoration-none fw-semibold text-green mt-2" style="font-size: 0.85rem;">
+                        Alokasi Rak <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Kartu Ekspedisi -->
+        <!-- Ekspedisi -->
         <div class="col-md-6 col-lg-3">
-            <div class="card card-clean h-100">
-                <div class="card-body p-4">
+            <div class="card border-0 rounded-4 shadow-sm h-100 bg-white hover-elevate">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h6 class="text-muted fw-bold mb-0" style="font-size: 0.8rem;">Antrean Ekspedisi</h6>
-                        <div class="stat-icon stat-icon-blue"><i class="bi bi-truck"></i></div>
+                        <div>
+                            <p class="text-muted mb-1 fw-medium" style="font-size: 0.85rem;">Antrean Ekspedisi</p>
+                            <h2 class="fw-bold text-dark mb-0"><?= $stat['ekspedisi']; ?></h2>
+                        </div>
+                        <div class="stat-icon stat-icon-blue rounded-circle" style="width: 45px; height: 45px;"><i class="bi bi-truck"></i></div>
                     </div>
-                    <h2 class="fw-bold text-dark mb-1"><?= $stat['ekspedisi']; ?></h2>
-                    <small class="text-muted">Surat Jalan siap kirim</small>
-                    <div class="mt-3">
-                        <a href="<?= BASEURL; ?>/outbound" class="small text-decoration-none fw-bold text-green">
-                            Panggil Truk Keluar <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
+                    <a href="<?= BASEURL; ?>/outbound" class="text-decoration-none fw-semibold text-green mt-2" style="font-size: 0.85rem;">
+                        Panggil Truk <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Kartu Kapasitas Gudang (REAL DATA) -->
+        <!-- Kapasitas -->
         <div class="col-md-6 col-lg-3">
-            <div class="card card-clean h-100">
+            <div class="card border-0 rounded-4 shadow-sm h-100 bg-white hover-elevate">
                 <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h6 class="text-muted fw-bold mb-0" style="font-size: 0.8rem;">Kapasitas Gudang</h6>
-                        <span class="badge <?= $badge_class; ?>"><?= $label_kapasitas; ?></span>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <p class="text-muted mb-0 fw-medium" style="font-size: 0.85rem;">Kapasitas Gudang</p>
+                        <span class="badge <?= $badge_class; ?> rounded-pill px-2"><?= $label_kapasitas; ?></span>
                     </div>
-                    <h2 class="fw-bold text-dark mb-0"><?= $persen; ?>%</h2>
-                    <small class="text-muted"><?= $stat['rak_terisi']; ?> / <?= $stat['total_rak']; ?> rak terisi</small>
-                    <div class="progress-clean mt-3">
+                    <div class="d-flex align-items-baseline mb-2">
+                        <h3 class="fw-bold text-dark mb-0 me-2"><?= $persen; ?>%</h3>
+                        <small class="text-muted"><?= $stat['rak_terisi']; ?> / <?= $stat['total_rak']; ?> rak</small>
+                    </div>
+                    <div class="progress-clean mb-2" style="height: 6px;">
                         <div class="progress-bar <?= $bar_color; ?>" role="progressbar" style="width: <?= $persen; ?>%;" aria-valuenow="<?= $persen; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <small class="text-muted d-block mt-2"><?= number_format($stat['berat_terpakai'], 0, ',', '.'); ?> / <?= number_format($stat['kapasitas_total'], 0, ',', '.'); ?> Kg</small>
+                    <small class="text-muted d-block text-end" style="font-size: 0.75rem;">
+                        <?= number_format($stat['berat_terpakai'], 0, ',', '.'); ?> / <?= number_format($stat['kapasitas_total'], 0, ',', '.'); ?> Kg
+                    </small>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- BARIS 2: AKSI CEPAT (HORIZONTAL) -->
-    <div class="row g-3 mb-4">
-        <div class="col-12">
-            <div class="card card-clean">
-                <div class="card-body py-3 px-4">
-                    <div class="d-flex flex-wrap align-items-center gap-3">
-                        <span class="fw-bold text-muted me-2"><i class="bi bi-lightning-charge-fill me-1"></i> Aksi Cepat:</span>
-                        <a href="<?= BASEURL; ?>/admin/inbound" class="btn btn-sm btn-outline-success rounded-pill px-3 quick-action-btn">
-                            <i class="bi bi-upc-scan me-1"></i> Scan Kedatangan
-                        </a>
-                        <a href="<?= BASEURL; ?>/admin/putaway" class="btn btn-sm btn-outline-warning rounded-pill px-3 quick-action-btn">
-                            <i class="bi bi-printer me-1"></i> Cetak Barcode
-                        </a>
-                        <a href="<?= BASEURL; ?>/outbound" class="btn btn-sm btn-green rounded-pill px-3">
-                            <i class="bi bi-file-earmark-text me-1"></i> Buat Surat Jalan (DO)
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- BARIS 3: 2 TABEL DATA REAL (50:50) -->
-    <div class="row g-4 mb-5 pb-4">
+    <!-- TABEL AKTIVITAS TERBARU -->
+    <div class="row g-4">
         
-        <!-- TABEL INBOUND TERBARU -->
+        <!-- Inbound Terbaru -->
         <div class="col-lg-6">
-            <h5 class="fw-bold mb-3"><i class="bi bi-box-arrow-in-down me-2 text-green"></i>Inbound Terbaru</h5>
-            <div class="card card-clean">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-clean mb-0 align-middle">
-                            <thead>
-                                <tr>
-                                    <th class="ps-4">ID</th>
-                                    <th>Pemasok</th>
-                                    <th>Komoditas</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if(empty($data['recent_inbound'])) : ?>
-                                <tr>
-                                    <td colspan="4" class="text-center py-5">
-                                        <i class="bi bi-inbox d-block fs-1 text-muted opacity-25 mb-2"></i>
-                                        <span class="text-muted">Belum ada data inbound.</span>
+            <div class="d-flex justify-content-between align-items-end mb-3 px-1">
+                <h6 class="fw-bold text-dark mb-0">Inbound Terbaru</h6>
+                <a href="<?= BASEURL; ?>/admin/inbound" class="text-muted text-decoration-none fw-medium hover-elevate px-2 py-1 rounded" style="font-size: 0.8rem; background: var(--gray-100);">Lihat Semua</a>
+            </div>
+            <div class="bg-white rounded-4 shadow-sm p-4">
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover align-middle mb-0" style="font-size: 0.9rem;">
+                        <thead class="text-muted" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <th class="fw-semibold pb-3 ps-2">No. ASN</th>
+                                <th class="fw-semibold pb-3">Pemasok</th>
+                                <th class="fw-semibold pb-3 text-end pe-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if(empty($data['recent_inbound'])) : ?>
+                            <tr>
+                                <td colspan="3" class="text-center py-5">
+                                    <div class="text-muted">Belum ada data inbound.</div>
+                                </td>
+                            </tr>
+                            <?php else : ?>
+                                <?php foreach(array_slice($data['recent_inbound'], 0, 5) as $asn) : ?>
+                                <tr style="border-bottom: 1px solid #f9fafb;">
+                                    <td class="ps-2 py-3">
+                                        <div class="fw-semibold text-dark">ASN-<?= str_pad($asn['id_asn'], 3, '0', STR_PAD_LEFT); ?></div>
+                                        <div class="text-muted" style="font-size: 0.8rem;"><?= date('d M Y', strtotime($asn['waktu_rencana_tiba'])); ?></div>
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="text-dark fw-medium"><?= $asn['nama_pemasok']; ?></div>
+                                        <div class="text-muted" style="font-size: 0.8rem;"><?= $asn['jumlah_item']; ?> item</div>
+                                    </td>
+                                    <td class="text-end pe-2 py-3">
+                                        <?php
+                                            $s = $asn['status_jadwal'];
+                                            if($s == 'menunggu') echo '<span class="badge badge-soft-warning rounded-pill px-3">Menunggu</span>';
+                                            elseif($s == 'disetujui') echo '<span class="badge badge-soft-primary rounded-pill px-3">Disetujui</span>';
+                                            elseif($s == 'menunggu_qc') echo '<span class="badge badge-soft-info rounded-pill px-3">QC</span>';
+                                            elseif(in_array($s, ['siap_putaway','in_storage','selesai'])) echo '<span class="badge badge-soft-success rounded-pill px-3">Selesai</span>';
+                                            elseif($s == 'ditolak') echo '<span class="badge badge-soft-danger rounded-pill px-3">Ditolak</span>';
+                                            elseif($s == 'ada_retur') echo '<span class="badge badge-soft-danger rounded-pill px-3">Retur</span>';
+                                            else echo '<span class="badge badge-soft-secondary rounded-pill px-3">'.$s.'</span>';
+                                        ?>
                                     </td>
                                 </tr>
-                                <?php else : ?>
-                                    <?php foreach($data['recent_inbound'] as $asn) : ?>
-                                    <tr>
-                                        <td class="ps-4">
-                                            <span class="fw-bold text-dark">ASN-<?= str_pad($asn['id_asn'], 3, '0', STR_PAD_LEFT); ?></span><br>
-                                            <small class="text-muted"><?= date('d M Y', strtotime($asn['waktu_rencana_tiba'])); ?></small>
-                                        </td>
-                                        <td>
-                                            <span class="fw-medium text-dark"><?= $asn['nama_pemasok']; ?></span><br>
-                                            <small class="text-muted"><?= $asn['jumlah_item']; ?> item</small>
-                                        </td>
-                                        <td><span class="text-muted" style="font-size: 0.85rem;"><?= $asn['daftar_komoditas'] ?: '-'; ?></span></td>
-                                        <td>
-                                            <?php
-                                                $s = $asn['status_jadwal'];
-                                                if($s == 'menunggu') echo '<span class="badge badge-soft badge-soft-warning"><i class="bi bi-hourglass-split me-1"></i>Menunggu</span>';
-                                                elseif($s == 'disetujui') echo '<span class="badge badge-soft badge-soft-primary"><i class="bi bi-check-lg me-1"></i>Disetujui</span>';
-                                                elseif($s == 'menunggu_qc') echo '<span class="badge badge-soft badge-soft-info"><i class="bi bi-search me-1"></i>QC</span>';
-                                                elseif(in_array($s, ['siap_putaway','in_storage','selesai'])) echo '<span class="badge badge-soft badge-soft-success"><i class="bi bi-check-circle me-1"></i>Selesai</span>';
-                                                elseif($s == 'ditolak') echo '<span class="badge badge-soft badge-soft-danger"><i class="bi bi-x-circle me-1"></i>Ditolak</span>';
-                                                elseif($s == 'ada_retur') echo '<span class="badge badge-soft badge-soft-danger"><i class="bi bi-arrow-return-left me-1"></i>Retur</span>';
-                                                else echo '<span class="badge badge-soft badge-soft-secondary">'.$s.'</span>';
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
-                <?php if(!empty($data['recent_inbound'])) : ?>
-                <div class="card-footer bg-transparent text-center border-top py-2">
-                    <a href="<?= BASEURL; ?>/admin/inbound" class="small text-decoration-none fw-bold text-green">Lihat semua inbound <i class="bi bi-arrow-right ms-1"></i></a>
-                </div>
-                <?php endif; ?>
             </div>
         </div>
 
-        <!-- TABEL OUTBOUND TERBARU -->
+        <!-- Outbound Terbaru -->
         <div class="col-lg-6">
-            <h5 class="fw-bold mb-3"><i class="bi bi-truck me-2 text-green"></i>Outbound Terbaru</h5>
-            <div class="card card-clean">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-clean mb-0 align-middle">
-                            <thead>
-                                <tr>
-                                    <th class="ps-4">ID</th>
-                                    <th>Klien</th>
-                                    <th>Berat</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if(empty($data['recent_outbound'])) : ?>
-                                <tr>
-                                    <td colspan="4" class="text-center py-5">
-                                        <i class="bi bi-inbox d-block fs-1 text-muted opacity-25 mb-2"></i>
-                                        <span class="text-muted">Belum ada sales order.</span>
+            <div class="d-flex justify-content-between align-items-end mb-3 px-1">
+                <h6 class="fw-bold text-dark mb-0">Outbound Terbaru</h6>
+                <a href="<?= BASEURL; ?>/outbound" class="text-muted text-decoration-none fw-medium hover-elevate px-2 py-1 rounded" style="font-size: 0.8rem; background: var(--gray-100);">Lihat Semua</a>
+            </div>
+            <div class="bg-white rounded-4 shadow-sm p-4">
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover align-middle mb-0" style="font-size: 0.9rem;">
+                        <thead class="text-muted" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <th class="fw-semibold pb-3 ps-2">No. SO</th>
+                                <th class="fw-semibold pb-3">Klien</th>
+                                <th class="fw-semibold pb-3 text-end pe-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if(empty($data['recent_outbound'])) : ?>
+                            <tr>
+                                <td colspan="3" class="text-center py-5">
+                                    <div class="text-muted">Belum ada sales order.</div>
+                                </td>
+                            </tr>
+                            <?php else : ?>
+                                <?php foreach(array_slice($data['recent_outbound'], 0, 5) as $so) : ?>
+                                <tr style="border-bottom: 1px solid #f9fafb;">
+                                    <td class="ps-2 py-3">
+                                        <div class="fw-semibold text-dark">SO-<?= str_pad($so['id_so'], 3, '0', STR_PAD_LEFT); ?></div>
+                                        <div class="text-muted" style="font-size: 0.8rem;"><?= date('d M Y', strtotime($so['created_at'])); ?></div>
+                                    </td>
+                                    <td class="py-3">
+                                        <div class="text-dark fw-medium"><?= $so['nama_klien']; ?></div>
+                                        <div class="fw-medium text-green" style="font-size: 0.8rem;"><?= number_format($so['total_diminta_kg'], 0, ',', '.'); ?> Kg</div>
+                                    </td>
+                                    <td class="text-end pe-2 py-3">
+                                        <?php
+                                            $st = $so['status_pesanan'];
+                                            if($st == 'pending') echo '<span class="badge badge-soft-warning rounded-pill px-3">Pending</span>';
+                                            elseif($st == 'proses_picking') echo '<span class="badge badge-soft-info rounded-pill px-3">Picking</span>';
+                                            elseif($st == 'siap_kirim') echo '<span class="badge badge-soft-primary rounded-pill px-3">Siap Kirim</span>';
+                                            elseif($st == 'selesai') echo '<span class="badge badge-soft-success rounded-pill px-3">Selesai</span>';
+                                        ?>
                                     </td>
                                 </tr>
-                                <?php else : ?>
-                                    <?php foreach($data['recent_outbound'] as $so) : ?>
-                                    <tr>
-                                        <td class="ps-4">
-                                            <span class="fw-bold text-dark">SO-<?= str_pad($so['id_so'], 3, '0', STR_PAD_LEFT); ?></span><br>
-                                            <small class="text-muted"><?= date('d M Y', strtotime($so['created_at'])); ?></small>
-                                        </td>
-                                        <td>
-                                            <span class="fw-medium text-dark"><?= $so['nama_klien']; ?></span><br>
-                                            <small class="text-muted"><?= $so['komoditas_dipesan']; ?></small>
-                                        </td>
-                                        <td><strong class="text-green"><?= number_format($so['total_diminta_kg'], 0, ',', '.'); ?> Kg</strong></td>
-                                        <td>
-                                            <?php
-                                                $st = $so['status_pesanan'];
-                                                if($st == 'pending') echo '<span class="badge badge-soft badge-soft-warning"><i class="bi bi-hourglass-split me-1"></i>Pending</span>';
-                                                elseif($st == 'proses_picking') echo '<span class="badge badge-soft badge-soft-info"><i class="bi bi-arrows-move me-1"></i>Picking</span>';
-                                                elseif($st == 'siap_kirim') echo '<span class="badge badge-soft badge-soft-primary"><i class="bi bi-truck me-1"></i>Siap Kirim</span>';
-                                                elseif($st == 'selesai') echo '<span class="badge badge-soft badge-soft-success"><i class="bi bi-check-circle me-1"></i>Selesai</span>';
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
-                <?php if(!empty($data['recent_outbound'])) : ?>
-                <div class="card-footer bg-transparent text-center border-top py-2">
-                    <a href="<?= BASEURL; ?>/outbound" class="small text-decoration-none fw-bold text-green">Lihat semua outbound <i class="bi bi-arrow-right ms-1"></i></a>
-                </div>
-                <?php endif; ?>
             </div>
         </div>
 
