@@ -158,9 +158,15 @@ class DashboardModel {
         $this->db->query("SELECT COUNT(id_so) as total FROM sales_order WHERE status_pesanan = 'siap_kirim'");
         $ekspedisi = $this->db->single()['total'] ?? 0;
 
-        // 4. Kapasitas Gudang: berat terpakai vs kapasitas total
-        $this->db->query("SELECT COALESCE(SUM(berat_aktif_kg), 0) as terpakai FROM stok_gudang WHERE status_stok IN ('tersedia', 'karantina')");
-        $berat_terpakai = (float) $this->db->single()['terpakai'];
+        // 4. Kapasitas Gudang: berat terpakai vs kapasitas total (Dipisah antara tersedia & karantina)
+        $this->db->query("SELECT 
+                            COALESCE(SUM(CASE WHEN status_stok = 'tersedia' THEN berat_aktif_kg ELSE 0 END), 0) as berat_tersedia,
+                            COALESCE(SUM(CASE WHEN status_stok = 'karantina' THEN berat_aktif_kg ELSE 0 END), 0) as berat_karantina
+                          FROM stok_gudang WHERE status_stok IN ('tersedia', 'karantina')");
+        $stok_row = $this->db->single();
+        $berat_tersedia = (float) $stok_row['berat_tersedia'];
+        $berat_karantina = (float) $stok_row['berat_karantina'];
+        $berat_terpakai = $berat_tersedia + $berat_karantina;
 
         $this->db->query("SELECT COALESCE(SUM(kapasitas_maksimal_kg), 0) as total_kapasitas FROM master_rak");
         $kapasitas_total = (float) $this->db->single()['total_kapasitas'];
@@ -179,6 +185,8 @@ class DashboardModel {
             'putaway' => $putaway,
             'ekspedisi' => $ekspedisi,
             'berat_terpakai' => $berat_terpakai,
+            'berat_tersedia' => $berat_tersedia,
+            'berat_karantina' => $berat_karantina,
             'kapasitas_total' => $kapasitas_total,
             'persen_kapasitas' => $persen_kapasitas,
             'rak_terisi' => $rak_terisi,

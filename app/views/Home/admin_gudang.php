@@ -113,12 +113,23 @@
                         <h3 class="fw-bold text-dark mb-0 me-2"><?= $persen; ?>%</h3>
                         <small class="text-muted"><?= $stat['rak_terisi']; ?> / <?= $stat['total_rak']; ?> rak</small>
                     </div>
-                    <div class="progress-clean mb-2" style="height: 6px;">
-                        <div class="progress-bar <?= $bar_color; ?>" role="progressbar" style="width: <?= $persen; ?>%;" aria-valuenow="<?= $persen; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-clean mb-2 d-flex" style="height: 8px;">
+                        <?php 
+                            $pct_tersedia = ($stat['kapasitas_total'] > 0) ? round(($stat['berat_tersedia'] / $stat['kapasitas_total']) * 100, 1) : 0;
+                            $pct_karantina = ($stat['kapasitas_total'] > 0) ? round(($stat['berat_karantina'] / $stat['kapasitas_total']) * 100, 1) : 0;
+                        ?>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $pct_tersedia; ?>%;" title="Tersedia: <?= $stat['berat_tersedia']; ?> Kg"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $pct_karantina; ?>%;" title="Karantina: <?= $stat['berat_karantina']; ?> Kg"></div>
                     </div>
-                    <small class="text-muted d-block text-end" style="font-size: 0.75rem;">
-                        <?= number_format($stat['berat_terpakai'], 0, ',', '.'); ?> / <?= number_format($stat['kapasitas_total'], 0, ',', '.'); ?> Kg
-                    </small>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 gap-2">
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge badge-soft-success border border-success border-opacity-25" style="font-size:0.65rem;">Tersedia: <?= number_format($stat['berat_tersedia'], 0, ',', '.'); ?></span>
+                            <span class="badge badge-soft-warning border border-warning border-opacity-25" style="font-size:0.65rem;">Karantina: <?= number_format($stat['berat_karantina'], 0, ',', '.'); ?></span>
+                        </div>
+                        <small class="text-muted fw-bold text-end" style="font-size: 0.75rem; min-width: max-content;">
+                            <?= number_format($stat['berat_terpakai'], 0, ',', '.'); ?> / <?= number_format($stat['kapasitas_total'], 0, ',', '.'); ?> Kg
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>

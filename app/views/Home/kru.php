@@ -1,137 +1,443 @@
-<div class="container-fluid mt-4 mb-5">
-    
+<?php
+    $first_name = explode(' ', trim($_SESSION['nama_lengkap']))[0];
+    $hour = (int)date('H');
+    if ($hour >= 5 && $hour < 12)       $salam = 'Selamat Pagi';
+    elseif ($hour >= 12 && $hour < 15)  $salam = 'Selamat Siang';
+    elseif ($hour >= 15 && $hour < 18)  $salam = 'Selamat Sore';
+    else                                $salam = 'Selamat Malam';
+    $tugas = (int)$data['tugas_picking'];
+?>
+
+<style>
+/* ===== KRU DASHBOARD STYLES ===== */
+.kru-hero {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+.kru-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 260px; height: 100%;
+    background: linear-gradient(135deg, transparent 0%, var(--green-50) 100%);
+    pointer-events: none;
+}
+.kru-hero .badge-role {
+    background: var(--green-100);
+    color: var(--green-800);
+    border: 1px solid var(--green-200);
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.kru-hero .stat-chip {
+    border-radius: 14px;
+    padding: 0.85rem 1.25rem;
+    text-align: center;
+    min-width: 110px;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.kru-hero .stat-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.kru-hero .stat-chip.chip-picking {
+    background: var(--green-100);
+    border: 1px solid var(--green-200);
+}
+.kru-hero .stat-chip.chip-picking .stat-num  { color: var(--green-800); }
+.kru-hero .stat-chip.chip-picking .stat-label { color: var(--green-700); }
+.kru-hero .stat-chip.chip-log {
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+}
+.kru-hero .stat-chip.chip-log .stat-num  { color: #1D4ED8; }
+.kru-hero .stat-chip.chip-log .stat-label { color: #2563EB; }
+.kru-hero .stat-chip.alert-chip {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+}
+.kru-hero .stat-chip.alert-chip .stat-num  { color: #991B1B; }
+.kru-hero .stat-chip.alert-chip .stat-label { color: #DC2626; }
+.kru-hero .stat-chip .stat-num {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.kru-hero .stat-chip .stat-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 5px;
+}
+
+.action-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--gray-200);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+.action-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(22,163,74,0.04) 100%);
+}
+.action-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border-color: var(--green-200);
+    color: inherit;
+}
+.action-card .ac-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+.action-card .ac-icon.green { background: var(--green-100); color: var(--green-700); }
+.action-card .ac-icon.blue  { background: #DBEAFE; color: #2563EB; }
+.action-card .ac-title { font-weight: 700; font-size: 0.95rem; color: var(--gray-900); margin-bottom: 2px; }
+.action-card .ac-sub   { font-size: 0.78rem; color: var(--gray-500); }
+.action-card .ac-arrow { margin-left: auto; color: var(--gray-300); font-size: 1.1rem; transition: transform 0.2s; }
+.action-card:hover .ac-arrow { transform: translateX(4px); color: var(--green-600); }
+
+.temp-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+}
+.temp-card .tc-header {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.temp-card .tc-header .tc-icon-wrap {
+    width: 40px; height: 40px;
+    background: rgba(251,191,36,0.2);
+    border: 1px solid rgba(251,191,36,0.3);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    color: #FBBF24;
+}
+.temp-card .tc-header h6 { color: white; font-weight: 700; margin: 0; font-size: 0.95rem; }
+.temp-card .tc-header p  { color: rgba(255,255,255,0.55); font-size: 0.75rem; margin: 0; }
+.temp-card .tc-body { padding: 1.5rem; }
+
+.temp-input-wrap {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 14px;
+    display: flex; align-items: center;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+.temp-input-wrap:focus-within { border-color: var(--green-500); }
+.temp-input-wrap input {
+    border: none; background: transparent;
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    flex: 1;
+    padding: 0.65rem 1rem;
+    outline: none;
+}
+.temp-input-wrap input::placeholder { color: var(--gray-400); font-weight: 400; }
+.temp-input-wrap .unit {
+    padding: 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gray-400);
+    border-left: 2px solid var(--gray-200);
+    background: white;
+    align-self: stretch;
+    display: flex; align-items: center;
+}
+
+.form-select-custom {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200) !important;
+    border-radius: 12px !important;
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: var(--gray-700);
+    padding: 0.6rem 0.9rem;
+    transition: border-color 0.2s;
+    box-shadow: none !important;
+}
+.form-select-custom:focus { border-color: var(--green-500) !important; }
+
+.btn-save-suhu {
+    background: linear-gradient(135deg, var(--green-700), var(--green-500));
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.85rem;
+    border-radius: 12px;
+    width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 14px rgba(22,163,74,0.3);
+    transition: all 0.2s;
+}
+.btn-save-suhu:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(22,163,74,0.4);
+    color: white;
+}
+
+.log-item {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--gray-200);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+.log-item:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.07); }
+.log-item .li-stripe {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+}
+.log-item .li-icon-wrap {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+.log-item .li-temp-badge {
+    margin-left: auto;
+    font-size: 1.1rem;
+    font-weight: 800;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.log-item .li-room { font-weight: 700; font-size: 0.9rem; color: var(--gray-900); }
+.log-item .li-meta { font-size: 0.76rem; color: var(--gray-400); display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.log-item .li-warn { font-size: 0.75rem; font-weight: 700; color: #DC2626; display: inline-flex; align-items: center; gap: 4px; margin-top: 5px; background: #FEE2E2; padding: 2px 8px; border-radius: 6px; }
+
+.empty-log-state { background: white; border-radius: 16px; border: 1px solid var(--gray-200); padding: 3rem 1rem; text-align: center; }
+</style>
+
+<div class="container-fluid mt-4 mb-5 px-lg-4">
+
+    <!-- FLASH MESSAGES -->
     <div class="row mb-4">
-        <div class="col-12">
-            <h2 class="fw-bold text-success">Halo, <?= explode(' ', trim($_SESSION['nama_lengkap']))[0]; ?>! 👋</h2>
-            <p class="text-muted">Selamat bertugas. Berikut ringkasan aktivitas lapanganmu hari ini.</p>
-        </div>
+        <div class="col-12"><?php Flasher::flash(); ?></div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <?php Flasher::flash(); ?>
-        </div>
-    </div>
-
-    <div class="row mb-4 g-3">
-        <div class="col-6">
-            <div class="card bg-primary text-white shadow-sm border-0 rounded-4 h-100">
-                <div class="card-body p-3 text-center">
-                    <i class="bi bi-list-task fs-1 mb-2"></i>
-                    <h2 class="fw-bold mb-0"><?= $data['tugas_picking']; ?></h2>
-                    <p class="small mb-0 opacity-75">Tugas Picking</p>
+    <!-- ===== HERO BANNER ===== -->
+    <div class="kru-hero mb-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 position-relative" style="z-index:1;">
+            <div>
+                <span class="badge-role mb-2"><i class="bi bi-person-badge"></i> Kru Gudang</span>
+                <h2 class="fw-bold mb-1" style="font-size: 1.6rem; letter-spacing: -0.5px; color: var(--gray-900);"><?= $salam ?>, <?= $first_name ?>! 👋</h2>
+                <p class="mb-0" style="color: var(--gray-500); font-size:0.9rem;">
+                    <?= date('l, d F Y') ?> &nbsp;·&nbsp; <i class="bi bi-clock me-1"></i><span id="kru-live-clock"></span> WIB
+                </p>
+                <script>
+                    (function() {
+                        function tick() {
+                            var now = new Date();
+                            var h = String(now.getHours()).padStart(2, '0');
+                            var m = String(now.getMinutes()).padStart(2, '0');
+                            var el = document.getElementById('kru-live-clock');
+                            if (el) el.textContent = h + ':' + m;
+                        }
+                        tick();
+                        setInterval(tick, 1000);
+                    })();
+                </script>
+            </div>
+            <div class="d-flex gap-3 flex-wrap">
+                <div class="stat-chip <?= $tugas > 0 ? 'alert-chip' : 'chip-picking' ?>">
+                    <div class="stat-num"><?= $tugas ?></div>
+                    <div class="stat-label"><?= $tugas > 0 ? '⚠ Tugas Picking' : 'Tugas Picking' ?></div>
                 </div>
-                <a href="<?= BASEURL; ?>/outbound" class="card-footer bg-dark bg-opacity-25 text-white text-center text-decoration-none border-0 rounded-bottom-4 small fw-bold">
-                    Lihat Tugas <i class="bi bi-arrow-right-short"></i>
-                </a>
+                <div class="stat-chip chip-log">
+                    <div class="stat-num"><?= count($data['riwayat_suhu']) ?></div>
+                    <div class="stat-label">Log Suhu Hari Ini</div>
+                </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="card bg-success text-white shadow-sm border-0 rounded-4 h-100">
-                <div class="card-body p-3 text-center">
-                    <i class="bi bi-boxes fs-1 mb-2"></i>
-                    <h2 class="fw-bold mb-0"><i class="bi bi-search"></i></h2>
-                    <p class="small mb-0 opacity-75">Cari Rak / Stok</p>
+    </div>
+
+    <!-- ===== AKSI CEPAT ===== -->
+    <div class="row g-3 mb-4">
+        <div class="col-12">
+            <p class="fw-bold text-muted mb-2" style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;">Aksi Cepat</p>
+        </div>
+        <div class="col-md-6">
+            <a href="<?= BASEURL; ?>/outbound" class="action-card shadow-sm">
+                <div class="ac-icon blue">
+                    <i class="bi bi-list-check"></i>
                 </div>
-                <a href="<?= BASEURL; ?>/stok" class="card-footer bg-dark bg-opacity-25 text-white text-center text-decoration-none border-0 rounded-bottom-4 small fw-bold">
-                    Buka Fitur <i class="bi bi-arrow-right-short"></i>
-                </a>
-            </div>
+                <div>
+                    <div class="ac-title">Daftar Tugas Picking</div>
+                    <div class="ac-sub">
+                        <?php if($tugas > 0): ?>
+                            <span class="badge bg-danger rounded-pill me-1"><?= $tugas ?></span> pesanan menunggu diproses
+                        <?php else: ?>
+                            Tidak ada tugas aktif saat ini
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <i class="bi bi-chevron-right ac-arrow"></i>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="<?= BASEURL; ?>/stok" class="action-card shadow-sm">
+                <div class="ac-icon green">
+                    <i class="bi bi-boxes"></i>
+                </div>
+                <div>
+                    <div class="ac-title">Cari Rak / Stok</div>
+                    <div class="ac-sub">Lokasi rak, komoditas, dan informasi stok</div>
+                </div>
+                <i class="bi bi-chevron-right ac-arrow"></i>
+            </a>
         </div>
     </div>
 
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-header bg-dark text-white p-3 rounded-top-4">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-thermometer-half me-2"></i>Catat Suhu Ruangan</h6>
+    <!-- ===== MAIN CONTENT: FORM + LOG ===== -->
+    <div class="row g-4">
+
+        <!-- CATAT SUHU RUANGAN -->
+        <div class="col-lg-5 col-xl-4">
+            <div class="temp-card shadow-sm h-100">
+                <div class="tc-header">
+                    <div class="tc-icon-wrap"><i class="bi bi-thermometer-sun"></i></div>
+                    <div>
+                        <h6>Catat Suhu Ruangan</h6>
+                        <p>Input suhu termostat langsung di sini</p>
+                    </div>
                 </div>
-                <div class="card-body p-4">
+                <div class="tc-body">
                     <form action="<?= BASEURL; ?>/home/simpanLogSuhu" method="POST">
-                        
                         <div class="mb-3">
-                            <label class="form-label small fw-bold text-dark">Pilih Ruang Penyimpanan <span class="text-danger">*</span></label>
-                            <select class="form-select fw-medium" name="id_ruangan" required>
+                            <label class="form-label fw-semibold text-dark mb-2" style="font-size:0.85rem;">
+                                <i class="bi bi-door-open me-1 text-muted"></i>Pilih Ruangan <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select form-select-custom" name="id_ruangan" required>
                                 <option value="" selected disabled>-- Pilih Ruangan --</option>
                                 <?php foreach($data['ruangan'] as $r) : ?>
-                                    <option value="<?= $r['id_ruangan']; ?>"><?= $r['kode_ruangan']; ?> (<?= $r['nama_ruangan']; ?>)</option>
-                                <?php endforeach; ?> 
+                                    <option value="<?= $r['id_ruangan']; ?>"><?= $r['kode_ruangan']; ?> · <?= $r['nama_ruangan']; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label small fw-bold text-dark">Suhu Tercatat di Termostat (°C) <span class="text-danger">*</span></label>
-                            <div class="input-group input-group-lg">
-                                <input type="number" step="0.1" class="form-control text-center fw-bold text-primary" name="suhu_tercatat" placeholder="0.0" required>
-                                <span class="input-group-text bg-light text-muted fw-bold">°C</span>
+                            <label class="form-label fw-semibold text-dark mb-2" style="font-size:0.85rem;">
+                                <i class="bi bi-thermometer-half me-1 text-muted"></i>Suhu Termostat <span class="text-danger">*</span>
+                            </label>
+                            <div class="temp-input-wrap">
+                                <input type="number" step="0.1" name="suhu_tercatat" placeholder="0.0" required>
+                                <span class="unit">°C</span>
                             </div>
+                            <p class="text-muted mt-2 mb-0" style="font-size:0.75rem;"><i class="bi bi-info-circle me-1"></i>Masukkan angka sesuai tampilan di termostat ruangan.</p>
                         </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-warning btn-lg fw-bold rounded-pill text-dark shadow-sm">
-                                <i class="bi bi-save2 me-2"></i>Simpan Log Suhu
-                            </button>
-                        </div>
+                        <button type="submit" class="btn-save-suhu">
+                            <i class="bi bi-floppy2-fill"></i> Simpan Log Suhu
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-12">
-            <h6 class="fw-bold text-muted mb-3"><i class="bi bi-clock-history me-2"></i>Log Terakhir Hari Ini</h6>
-            
+        <!-- LOG SUHU HARI INI -->
+        <div class="col-lg-7 col-xl-8">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                    <h6 class="fw-bold text-dark mb-0">Log Suhu Hari Ini</h6>
+                    <p class="text-muted mb-0" style="font-size:0.8rem;">Menampilkan 5 log terakhir per hari ini</p>
+                </div>
+                <?php $anomali_count = count(array_filter($data['riwayat_suhu'], function($l){ $b=explode('-',str_replace('°C','',$l['rentang_suhu'])); return (float)$l['suhu_celcius']<(float)trim($b[0])||(float)$l['suhu_celcius']>(float)trim($b[1]); })); ?>
+                <?php if($anomali_count > 0): ?>
+                    <span class="badge bg-danger rounded-pill px-3 py-2 shadow-sm"><i class="bi bi-exclamation-triangle-fill me-1"></i><?= $anomali_count ?> Anomali</span>
+                <?php else: ?>
+                    <span class="badge badge-soft-success rounded-pill px-3 py-2"><i class="bi bi-shield-check me-1"></i>Semua Normal</span>
+                <?php endif; ?>
+            </div>
+
             <?php if(empty($data['riwayat_suhu'])) : ?>
-                <div class="alert alert-light text-center text-muted border-0 shadow-sm rounded-4 py-4">
-                    <i class="bi bi-wind fs-2 d-block mb-2"></i>
-                    Belum ada pencatatan suhu hari ini.
+                <div class="empty-log-state">
+                    <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width:70px;height:70px;">
+                        <i class="bi bi-wind fs-2 text-muted opacity-50"></i>
+                    </div>
+                    <h6 class="fw-bold text-dark mb-1">Belum ada pencatatan</h6>
+                    <p class="text-muted small mb-0">Riwayat suhu hari ini akan muncul setelah kamu mengisi form di sebelah kiri.</p>
                 </div>
             <?php else : ?>
-                <div class="list-group shadow-sm rounded-4 border-0">
+                <div class="d-flex flex-column gap-3">
                     <?php foreach($data['riwayat_suhu'] as $log) : ?>
-                        <?php 
-                            // LOGIKA DETEKSI ANOMALI SUHU
-                            // 1. Bersihkan string "°C" dari database (misal: "0°C - 2°C" jadi "0 - 2")
+                        <?php
                             $rentang_bersih = str_replace('°C', '', $log['rentang_suhu']);
-                            
-                            // 2. Pecah batas minimum dan maksimum berdasarkan tanda strip "-"
-                            $batas = explode('-', $rentang_bersih);
+                            $batas    = explode('-', $rentang_bersih);
                             $min_suhu = (float)trim($batas[0]);
                             $max_suhu = (float)trim($batas[1]);
                             $suhu_aktual = (float)$log['suhu_celcius'];
-
-                            // 3. Tentukan apakah suhu keluar jalur
                             $is_abnormal = ($suhu_aktual < $min_suhu || $suhu_aktual > $max_suhu);
                         ?>
-                        
-                        <div class="list-group-item d-flex justify-content-between align-items-center p-3 border-0 border-bottom <?= $is_abnormal ? 'bg-danger-subtle' : ''; ?>">
-                            <div>
-                                <h6 class="mb-1 fw-bold <?= $is_abnormal ? 'text-danger' : 'text-dark'; ?>">
-                                    <?= $log['kode_ruangan']; ?> 
-                                    <span class="badge bg-light text-secondary border fw-normal ms-1"><?= $log['rentang_suhu']; ?></span>
-                                </h6>
-                                
-                                <small class="text-muted d-block mb-1">
-                                    <i class="bi bi-calendar-event me-1"></i><?= date('d M Y', strtotime($log['waktu_catat'])); ?> &nbsp;|&nbsp; 
-                                    <i class="bi bi-clock me-1"></i><?= date('H:i', strtotime($log['waktu_catat'])); ?> WIB
-                                </small>
-
-                                <?php if($is_abnormal) : ?>
-                                    <div class="text-danger small fw-bold mt-1">
-                                        <i class="bi bi-exclamation-triangle-fill me-1"></i>Suhu di luar batas aman!
-                                    </div>
+                        <div class="log-item shadow-sm">
+                            <div class="li-stripe" style="background: <?= $is_abnormal ? '#EF4444' : '#22C55E' ?>;"></div>
+                            <div class="li-icon-wrap" style="background: <?= $is_abnormal ? '#FEE2E2' : '#DCFCE7' ?>;">
+                                <i class="bi <?= $is_abnormal ? 'bi-exclamation-triangle-fill text-danger' : 'bi-thermometer-half text-success' ?>"></i>
+                            </div>
+                            <div style="min-width:0;">
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <span class="li-room"><?= $log['kode_ruangan'] ?></span>
+                                    <span class="badge bg-light text-secondary border fw-normal px-2" style="font-size:0.7rem;"><?= $log['rentang_suhu'] ?></span>
+                                </div>
+                                <div class="li-meta">
+                                    <i class="bi bi-calendar3"></i> <?= date('d M Y', strtotime($log['waktu_catat'])) ?>
+                                    <span style="opacity:0.4;">|</span>
+                                    <i class="bi bi-clock"></i> <?= date('H:i', strtotime($log['waktu_catat'])) ?> WIB
+                                </div>
+                                <?php if($is_abnormal): ?>
+                                    <div class="li-warn"><i class="bi bi-exclamation-octagon-fill"></i> Suhu di luar batas aman!</div>
                                 <?php endif; ?>
                             </div>
-
-                            <span class="badge <?= $is_abnormal ? 'bg-danger' : 'bg-info text-dark border-info-subtle'; ?> rounded-pill fs-6 px-3 border shadow-sm">
-                                <?= number_format($suhu_aktual, 1, ',', '.'); ?> °C
-                            </span>
+                            <div class="li-temp-badge" style="background:<?= $is_abnormal ? '#FEE2E2' : '#DCFCE7' ?>; color:<?= $is_abnormal ? '#991B1B' : '#166534' ?>;">
+                                <?= number_format($suhu_aktual, 1, ',', '.') ?> °C
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-
         </div>
+
     </div>
 </div>
