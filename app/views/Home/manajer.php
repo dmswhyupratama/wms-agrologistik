@@ -532,7 +532,7 @@
 <div class="container-fluid mt-4 mb-5 px-lg-4">
 
     <!-- ===== HERO BANNER ===== -->
-    <div class="mgr-hero mb-4">
+    <div class="mgr-hero mb-4 animate-box">
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 position-relative" style="z-index:1;">
             <div>
                 <span class="badge-role mb-2"><i class="bi bi-shield-check"></i> Manajer Gudang</span>
@@ -568,7 +568,7 @@
 
         <!-- Pesanan Aktif (Outbound) -->
         <div class="col-6 col-lg-3">
-            <div class="kpi-card shadow-sm">
+            <div class="kpi-card shadow-sm animate-box">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="kpi-icon icon-blue"><i class="bi bi-cart-check"></i></div>
                 </div>
@@ -580,7 +580,7 @@
 
         <!-- Antrean QC -->
         <div class="col-6 col-lg-3">
-            <div class="kpi-card shadow-sm">
+            <div class="kpi-card shadow-sm animate-box">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="kpi-icon <?= ($stat['antrean_qc'] > 0) ? 'icon-amber' : 'icon-emerald' ?>">
                         <i class="bi bi-clipboard-pulse"></i>
@@ -598,7 +598,7 @@
 
         <!-- Stok Tersedia -->
         <div class="col-6 col-lg-3">
-            <div class="kpi-card shadow-sm">
+            <div class="kpi-card shadow-sm animate-box">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="kpi-icon icon-green"><i class="bi bi-box-seam"></i></div>
                 </div>
@@ -610,7 +610,7 @@
 
         <!-- Stok Karantina -->
         <div class="col-6 col-lg-3">
-            <div class="kpi-card shadow-sm">
+            <div class="kpi-card shadow-sm animate-box">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="kpi-icon <?= ($stat['stok_karantina'] > 0) ? 'icon-red' : 'icon-emerald' ?>">
                         <i class="bi bi-shield-exclamation"></i>
@@ -629,7 +629,7 @@
     </div>
 
     <!-- ===== THERMOSTAT STATUS PANEL ===== -->
-    <div class="thermo-panel shadow-sm mb-4">
+    <div class="thermo-panel shadow-sm mb-4 animate-box">
         <div class="tp-header">
             <div class="tp-left">
                 <div class="tp-icon"><i class="bi bi-thermometer-high"></i></div>
@@ -693,7 +693,7 @@
         $pct_tersedia = ($total_stok > 0) ? round(($stat['stok_tersedia'] / $total_stok) * 100, 1) : 100;
         $pct_karantina = ($total_stok > 0) ? round(($stat['stok_karantina'] / $total_stok) * 100, 1) : 0;
     ?>
-    <div class="stock-panel shadow-sm mb-4">
+    <div class="stock-panel shadow-sm mb-4 animate-box">
         <div class="sp-header">
             <div class="sp-left">
                 <div class="sp-icon"><i class="bi bi-pie-chart-fill"></i></div>
@@ -749,7 +749,7 @@
     </div>
     <div class="row g-3">
         <div class="col-md-6 col-lg-3">
-            <a href="<?= BASEURL; ?>/waste" class="qa-card shadow-sm">
+            <a href="<?= BASEURL; ?>/waste" class="qa-card shadow-sm animate-box">
                 <div class="qa-icon qi-red"><i class="bi bi-graph-up-arrow"></i></div>
                 <div>
                     <div class="qa-title">Laporan Waste</div>
@@ -759,7 +759,7 @@
             </a>
         </div>
         <div class="col-md-6 col-lg-3">
-            <a href="<?= BASEURL; ?>/stok" class="qa-card shadow-sm">
+            <a href="<?= BASEURL; ?>/stok" class="qa-card shadow-sm animate-box">
                 <div class="qa-icon qi-green"><i class="bi bi-boxes"></i></div>
                 <div>
                     <div class="qa-title">Stok & Rak</div>
@@ -769,7 +769,7 @@
             </a>
         </div>
         <div class="col-md-6 col-lg-3">
-            <a href="<?= BASEURL; ?>/outbound" class="qa-card shadow-sm">
+            <a href="<?= BASEURL; ?>/outbound" class="qa-card shadow-sm animate-box">
                 <div class="qa-icon qi-blue"><i class="bi bi-truck"></i></div>
                 <div>
                     <div class="qa-title">Outbound</div>
@@ -779,7 +779,7 @@
             </a>
         </div>
         <div class="col-md-6 col-lg-3">
-            <a href="<?= BASEURL; ?>/pegawai" class="qa-card shadow-sm">
+            <a href="<?= BASEURL; ?>/pegawai" class="qa-card shadow-sm animate-box">
                 <div class="qa-icon qi-purple"><i class="bi bi-people"></i></div>
                 <div>
                     <div class="qa-title">Data Pegawai</div>

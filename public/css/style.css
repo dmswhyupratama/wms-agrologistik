@@ -324,3 +324,64 @@ p { color: var(--text-secondary); }
 .text-green-dark { color: var(--green-800) !important; }
 .text-green      { color: var(--primary) !important; }
 .bg-green-light  { background: var(--green-50) !important; }
+
+/* ===== GLOBAL MICRO-ANIMATIONS (3D/SHINE EFFECT) ===== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Auto-staggered entrance animations for cards and grid items */
+.card,
+.card-clean,
+.card-green,
+.action-card,
+.stat-chip,
+.log-item,
+.wk-form-card,
+.animate-box {
+    animation: fadeInUp 0.5s ease both;
+}
+
+/* Stagger delay for elements in a grid/list to create a wave effect */
+.card:nth-child(1), .action-card:nth-child(1), .log-item:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2), .action-card:nth-child(2), .log-item:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3), .action-card:nth-child(3), .log-item:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4), .action-card:nth-child(4), .log-item:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5), .action-card:nth-child(5), .log-item:nth-child(5) { animation-delay: 0.25s; }
+
+/* Global Button Shine/Glossy effect */
+.btn-green, 
+.btn-primary, 
+.btn-danger, 
+.btn-info,
+.btn-save-suhu, 
+.wk-btn-submit,
+.dp-btn-confirm {
+    position: relative;
+    overflow: hidden;
+}
+.btn-green::after, 
+.btn-primary::after, 
+.btn-danger::after, 
+.btn-info::after,
+.btn-save-suhu::after, 
+.wk-btn-submit::after,
+.dp-btn-confirm::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.5s ease;
+}
+.btn-green:hover::after, 
+.btn-primary:hover::after, 
+.btn-danger:hover::after, 
+.btn-info:hover::after,
+.btn-save-suhu:hover::after, 
+.wk-btn-submit:hover::after,
+.dp-btn-confirm:hover::after {
+    left: 100%;
+}
+

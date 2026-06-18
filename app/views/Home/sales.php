@@ -305,6 +305,133 @@
         display: block;
         margin-bottom: 0.75rem;
     }
+
+    /* ===== MOBILE OPTIMIZATIONS ===== */
+    @media (max-width: 767.98px) {
+        /* Hero: compact on mobile */
+        .sales-hero-greeting {
+            padding: 1.35rem 1.15rem;
+            border-radius: 16px;
+        }
+        .sales-hero-greeting h2 {
+            font-size: 1.3rem !important;
+        }
+        .sales-hero-greeting p {
+            font-size: 0.82rem !important;
+        }
+        .hero-icon-wrap {
+            width: 52px;
+            height: 52px;
+            font-size: 1.4rem;
+            border-radius: 14px;
+        }
+        .hero-date {
+            font-size: 0.68rem;
+            padding: 0.25rem 0.65rem;
+        }
+
+        /* Stat cards: tighter padding */
+        .stat-card {
+            padding: 1.1rem 1.15rem;
+            border-radius: 12px;
+        }
+        .stat-card:hover {
+            transform: none;
+        }
+        .stat-number {
+            font-size: 1.65rem;
+        }
+        .stat-icon-wrap {
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+        }
+
+        /* CTA Card: mobile friendly */
+        .cta-card {
+            padding: 1.5rem 1.25rem;
+            border-radius: 16px;
+        }
+        .cta-icon {
+            width: 46px;
+            height: 46px;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+        }
+        .cta-card h5 {
+            font-size: 1.05rem !important;
+        }
+        .cta-card p {
+            font-size: 0.82rem !important;
+        }
+        .btn-cta {
+            width: 100%;
+            justify-content: center;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.88rem;
+            margin-top: 1rem;
+        }
+
+        /* Table Card */
+        .table-card {
+            border-radius: 16px;
+        }
+        .table-card-header {
+            padding: 0.85rem 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .table-card-header h6 {
+            font-size: 0.8rem;
+        }
+        .table-card-header .btn {
+            font-size: 0.72rem !important;
+            padding: 0.3rem 0.65rem !important;
+        }
+        .table-card-header .stat-icon-wrap {
+            width: 30px !important;
+            height: 30px !important;
+            font-size: 0.85rem !important;
+        }
+        .table-card-header p {
+            font-size: 0.65rem !important;
+        }
+
+        /* Stok items */
+        .table-card .p-3 { padding: 0.75rem !important; }
+        .table-card .p-3 .p-3 { padding: 0.65rem 0.75rem !important; }
+        .table-card .stok-rank-num {
+            width: 22px;
+            height: 22px;
+            font-size: 0.65rem;
+        }
+    }
+
+    /* Small phones */
+    @media (max-width: 374px) {
+        .sales-hero-greeting {
+            padding: 1.15rem 1rem;
+        }
+        .sales-hero-greeting h2 {
+            font-size: 1.15rem !important;
+        }
+        .hero-icon-wrap {
+            width: 44px;
+            height: 44px;
+            font-size: 1.2rem;
+        }
+        .stat-number {
+            font-size: 1.4rem;
+        }
+        .stat-card {
+            padding: 1rem;
+        }
+    }
 </style>
 
 <div class="container-fluid py-4 pb-5">
@@ -312,7 +439,7 @@
     <!-- ====== HERO GREETING BANNER ====== -->
     <div class="row mb-4">
         <div class="col-12">
-            <div class="sales-hero-greeting">
+            <div class="sales-hero-greeting animate-box">
                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 position-relative" style="z-index: 1;">
                     <div>
                         <div class="hero-badge">
@@ -330,7 +457,7 @@
                             <i class="bi bi-calendar3"></i>
                             <?= date('l, d F Y'); ?>
                         </div>
-                        <div class="hero-icon-wrap">
+                        <div class="hero-icon-wrap d-none d-sm-flex">
                             <i class="bi bi-graph-up-arrow" style="color: rgba(255,255,255,0.9);"></i>
                         </div>
                     </div>
@@ -342,8 +469,8 @@
     <!-- ====== STAT CARDS ====== -->
     <div class="row g-3 mb-4">
 
-        <div class="col-sm-6 col-lg-4">
-            <div class="stat-card stat-card-today">
+        <div class="col-6 col-lg-4">
+            <div class="stat-card stat-card-today animate-box">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="stat-label">Pesanan Masuk<br><span class="stat-sub">Hari ini</span></div>
                     <div class="stat-icon-wrap" style="background:var(--green-100); color:var(--green-700);">
@@ -352,28 +479,30 @@
                 </div>
                 <div class="d-flex align-items-baseline gap-2">
                     <span class="stat-number"><?= $data['statistik']['so_hari_ini']; ?></span>
-                    <span style="font-size:0.8rem; color:var(--gray-400); font-weight:500;">Dokumen SO</span>
+                    <span class="d-none d-sm-inline" style="font-size:0.8rem; color:var(--gray-400); font-weight:500;">Dokumen SO</span>
+                    <span class="d-inline d-sm-none" style="font-size:0.7rem; color:var(--gray-400); font-weight:500;">SO</span>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-4">
-            <div class="stat-card stat-card-pending">
+        <div class="col-6 col-lg-4">
+            <div class="stat-card stat-card-pending animate-box">
                 <div class="d-flex justify-content-between align-items-start mb-3">
-                    <div class="stat-label">Menunggu Diproses<br><span class="stat-sub">Perlu tindak lanjut</span></div>
+                    <div class="stat-label">Menunggu<span class="d-none d-sm-inline"> Diproses</span><br><span class="stat-sub">Perlu tindak lanjut</span></div>
                     <div class="stat-icon-wrap" style="background:#FEF3C7; color:#D97706;">
                         <i class="bi bi-hourglass-split"></i>
                     </div>
                 </div>
                 <div class="d-flex align-items-baseline gap-2">
                     <span class="stat-number"><?= $data['statistik']['so_gantung']; ?></span>
-                    <span style="font-size:0.8rem; color:var(--gray-400); font-weight:500;">Dokumen SO</span>
+                    <span class="d-none d-sm-inline" style="font-size:0.8rem; color:var(--gray-400); font-weight:500;">Dokumen SO</span>
+                    <span class="d-inline d-sm-none" style="font-size:0.7rem; color:var(--gray-400); font-weight:500;">SO</span>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-4">
-            <div class="stat-card stat-card-done">
+        <div class="col-12 col-lg-4">
+            <div class="stat-card stat-card-done animate-box">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="stat-label">Sukses Terkirim<br><span class="stat-sub">Hari ini</span></div>
                     <div class="stat-icon-wrap" style="background:#D1FAE5; color:#059669;">
@@ -394,7 +523,7 @@
 
         <!-- CTA Card -->
         <div class="col-md-5 col-lg-4">
-            <div class="cta-card">
+            <div class="cta-card animate-box">
                 <div class="cta-icon">
                     <i class="bi bi-cart-check-fill" style="color:rgba(255,255,255,0.95);"></i>
                 </div>
@@ -411,7 +540,7 @@
 
         <!-- Tabel Top Stok -->
         <div class="col-md-7 col-lg-8">
-            <div class="table-card">
+            <div class="table-card animate-box">
                 <div class="table-card-header">
                     <div class="d-flex align-items-center gap-2">
                         <div class="stat-icon-wrap" style="width:36px;height:36px;background:var(--green-100);color:var(--green-700);font-size:1rem;">

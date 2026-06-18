@@ -249,6 +249,153 @@
 .log-item .li-warn { font-size: 0.75rem; font-weight: 700; color: #DC2626; display: inline-flex; align-items: center; gap: 4px; margin-top: 5px; background: #FEE2E2; padding: 2px 8px; border-radius: 6px; }
 
 .empty-log-state { background: white; border-radius: 16px; border: 1px solid var(--gray-200); padding: 3rem 1rem; text-align: center; }
+
+/* ===== MOBILE OPTIMIZATIONS ===== */
+@media (max-width: 767.98px) {
+    /* Hero: compact */
+    .kru-hero {
+        padding: 1.25rem 1.15rem;
+        border-radius: 16px;
+    }
+    .kru-hero h2 {
+        font-size: 1.25rem !important;
+    }
+    .kru-hero p {
+        font-size: 0.8rem !important;
+    }
+    .kru-hero .badge-role {
+        font-size: 0.68rem;
+        padding: 0.25rem 0.6rem;
+    }
+    .kru-hero .stat-chip {
+        min-width: 90px;
+        padding: 0.65rem 0.85rem;
+        border-radius: 12px;
+    }
+    .kru-hero .stat-chip .stat-num {
+        font-size: 1.25rem;
+    }
+    .kru-hero .stat-chip .stat-label {
+        font-size: 0.62rem;
+    }
+
+    /* Action cards: compact */
+    .action-card {
+        padding: 1.1rem;
+        gap: 0.85rem;
+        border-radius: 14px;
+    }
+    .action-card:hover {
+        transform: none;
+    }
+    .action-card .ac-icon {
+        width: 42px; height: 42px;
+        font-size: 1.15rem;
+        border-radius: 12px;
+    }
+    .action-card .ac-title {
+        font-size: 0.88rem;
+    }
+    .action-card .ac-sub {
+        font-size: 0.72rem;
+    }
+
+    /* Temp card form */
+    .temp-card {
+        border-radius: 16px;
+    }
+    .temp-card .tc-header {
+        padding: 1rem 1.15rem;
+    }
+    .temp-card .tc-header .tc-icon-wrap {
+        width: 36px; height: 36px;
+        font-size: 0.95rem;
+    }
+    .temp-card .tc-header h6 {
+        font-size: 0.88rem;
+    }
+    .temp-card .tc-body {
+        padding: 1.15rem;
+    }
+    .temp-input-wrap input {
+        font-size: 1rem;
+        padding: 0.55rem 0.75rem;
+    }
+    .temp-input-wrap .unit {
+        padding: 0 0.75rem;
+        font-size: 0.95rem;
+    }
+    .form-select-custom {
+        font-size: 0.82rem;
+        padding: 0.55rem 0.75rem;
+    }
+    .btn-save-suhu {
+        font-size: 0.88rem;
+        padding: 0.75rem;
+        border-radius: 10px;
+    }
+
+    /* Log items: compact */
+    .log-item {
+        padding: 0.85rem 1rem;
+        gap: 0.75rem;
+        border-radius: 14px;
+    }
+    .log-item .li-icon-wrap {
+        width: 38px; height: 38px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+    .log-item .li-room {
+        font-size: 0.82rem;
+    }
+    .log-item .li-meta {
+        font-size: 0.68rem;
+        gap: 5px;
+    }
+    .log-item .li-temp-badge {
+        font-size: 0.9rem;
+        padding: 0.35rem 0.7rem;
+        border-radius: 10px;
+    }
+    .log-item .li-warn {
+        font-size: 0.68rem;
+        padding: 2px 6px;
+    }
+
+    .empty-log-state {
+        padding: 2rem 1rem;
+        border-radius: 14px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 374px) {
+    .kru-hero {
+        padding: 1rem;
+    }
+    .kru-hero h2 {
+        font-size: 1.1rem !important;
+    }
+    .kru-hero .stat-chip {
+        min-width: 80px;
+        padding: 0.5rem 0.7rem;
+    }
+    .kru-hero .stat-chip .stat-num {
+        font-size: 1.1rem;
+    }
+    .action-card {
+        padding: 0.95rem;
+    }
+    .log-item .li-icon-wrap {
+        width: 34px; height: 34px;
+        font-size: 0.95rem;
+    }
+    .log-item .li-temp-badge {
+        font-size: 0.82rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
 </style>
 
 <div class="container-fluid mt-4 mb-5 px-lg-4">

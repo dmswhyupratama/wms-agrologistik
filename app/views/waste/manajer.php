@@ -330,7 +330,7 @@
     <!-- 3 STAT CARDS -->
     <div class="row mb-4 g-3">
         <div class="col-md-4">
-            <div class="waste-stat-card shadow-sm">
+            <div class="waste-stat-card shadow-sm animate-box">
                 <div class="wsc-header">
                     <div class="wsc-label">Rasio Penyusutan Hari Ini</div>
                     <div class="wsc-icon <?= $is_alert ? 'wsi-alert' : 'wsi-ok' ?>">
@@ -351,7 +351,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="waste-stat-card shadow-sm">
+            <div class="waste-stat-card shadow-sm animate-box">
                 <div class="wsc-header">
                     <div class="wsc-label">Total Limbah Dibuang</div>
                     <div class="wsc-icon wsi-dark"><i class="bi bi-trash3"></i></div>
@@ -361,7 +361,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="waste-stat-card shadow-sm">
+            <div class="waste-stat-card shadow-sm animate-box">
                 <div class="wsc-header">
                     <div class="wsc-label">Total Stok Tersedia</div>
                     <div class="wsc-icon wsi-blue"><i class="bi bi-box-seam"></i></div>
@@ -373,7 +373,7 @@
     </div>
 
     <!-- TABLE: RIWAYAT EVALUASI -->
-    <div class="waste-table-card shadow-sm">
+    <div class="waste-table-card shadow-sm animate-box">
         <div class="wtc-header">
             <div class="wtc-icon"><i class="bi bi-clock-history"></i></div>
             <div>
