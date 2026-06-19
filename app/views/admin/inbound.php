@@ -86,26 +86,23 @@
 
 <!-- Modal Confirm Setuju -->
 <div class="modal fade" id="modalSetuju" tabindex="-1" aria-labelledby="modalSetujuLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 rounded-4 shadow">
-      <div class="modal-header border-bottom-0 pb-0">
-        <h5 class="modal-title fw-bold" id="modalSetujuLabel">Konfirmasi Persetujuan</h5>
-        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body py-4">
-        <div class="d-flex align-items-center mb-3">
-            <div class="bg-green-light text-green rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                <i class="bi bi-check-circle fs-3"></i>
-            </div>
-            <div>
-                <h6 class="fw-bold mb-1">Setujui Jadwal Ini?</h6>
-                <p class="text-muted mb-0" style="font-size: 0.9rem;">Truk akan diizinkan masuk ke Loading Dock untuk proses pembongkaran muatan.</p>
-            </div>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+      <div class="modal-body p-4 text-center">
+        <!-- Premium Icon -->
+        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4 mt-2 shadow-sm" style="width: 80px; height: 80px;">
+            <i class="bi bi-check-lg" style="font-size: 3.5rem; -webkit-text-stroke: 2px;"></i>
         </div>
-      </div>
-      <div class="modal-footer border-top-0 pt-0">
-        <button type="button" class="btn btn-light rounded-pill px-4 fw-medium" data-bs-dismiss="modal">Batal</button>
-        <a href="#" id="btnConfirmSetuju" class="btn btn-green rounded-pill px-4 fw-medium">Ya, Setujui</a>
+        
+        <h4 class="fw-bold text-dark mb-2">Setujui Jadwal?</h4>
+        <p class="text-muted mb-4 small px-2">Truk akan diizinkan masuk ke Loading Dock untuk proses pembongkaran muatan.</p>
+        
+        <div class="d-flex flex-column gap-2">
+            <a href="#" id="btnConfirmSetuju" class="btn btn-green rounded-pill py-2 fw-bold shadow-sm w-100 hover-elevate">
+                <i class="bi bi-check-lg me-1"></i> Ya, Setujui
+            </a>
+            <button type="button" class="btn btn-light rounded-pill py-2 fw-medium w-100 text-secondary" data-bs-dismiss="modal">Batal</button>
+        </div>
       </div>
     </div>
   </div>
@@ -113,26 +110,23 @@
 
 <!-- Modal Confirm Tolak -->
 <div class="modal fade" id="modalTolak" tabindex="-1" aria-labelledby="modalTolakLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 rounded-4 shadow">
-      <div class="modal-header border-bottom-0 pb-0">
-        <h5 class="modal-title fw-bold" id="modalTolakLabel">Konfirmasi Penolakan</h5>
-        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body py-4">
-        <div class="d-flex align-items-center mb-3">
-            <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                <i class="bi bi-x-circle fs-3"></i>
-            </div>
-            <div>
-                <h6 class="fw-bold mb-1">Tolak Jadwal Ini?</h6>
-                <p class="text-muted mb-0" style="font-size: 0.9rem;">Truk tidak akan diizinkan masuk. Tindakan ini tidak dapat dibatalkan.</p>
-            </div>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+      <div class="modal-body p-4 text-center">
+        <!-- Premium Icon -->
+        <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4 mt-2 shadow-sm" style="width: 80px; height: 80px;">
+            <i class="bi bi-x-lg" style="font-size: 3.5rem; -webkit-text-stroke: 2px;"></i>
         </div>
-      </div>
-      <div class="modal-footer border-top-0 pt-0">
-        <button type="button" class="btn btn-light rounded-pill px-4 fw-medium" data-bs-dismiss="modal">Batal</button>
-        <a href="#" id="btnConfirmTolak" class="btn btn-danger rounded-pill px-4 fw-medium">Ya, Tolak</a>
+        
+        <h4 class="fw-bold text-dark mb-2">Tolak Jadwal?</h4>
+        <p class="text-muted mb-4 small px-2">Truk tidak akan diizinkan masuk. Tindakan ini tidak dapat dibatalkan.</p>
+        
+        <div class="d-flex flex-column gap-2">
+            <a href="#" id="btnConfirmTolak" class="btn btn-danger rounded-pill py-2 fw-bold shadow-sm w-100 hover-elevate">
+                <i class="bi bi-trash3 me-1"></i> Ya, Tolak
+            </a>
+            <button type="button" class="btn btn-light rounded-pill py-2 fw-medium w-100 text-secondary" data-bs-dismiss="modal">Batal</button>
+        </div>
       </div>
     </div>
   </div>
@@ -142,6 +136,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const modalSetuju = document.getElementById('modalSetuju');
     if (modalSetuju) {
+        document.body.appendChild(modalSetuju);
         modalSetuju.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
             const url = button.getAttribute('data-url');
@@ -151,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const modalTolak = document.getElementById('modalTolak');
     if (modalTolak) {
+        document.body.appendChild(modalTolak);
         modalTolak.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
             const url = button.getAttribute('data-url');

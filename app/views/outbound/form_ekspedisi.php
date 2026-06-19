@@ -67,7 +67,7 @@
             </div>
 
             <div class="text-end mt-4 pt-3">
-                <button type="button" class="btn btn-warning rounded-pill fw-medium px-4 py-2 shadow-sm text-dark hover-elevate" data-bs-toggle="modal" data-bs-target="#modalEkspedisi">
+                <button type="submit" class="btn btn-green rounded-pill fw-medium px-4 py-2 shadow-sm text-white hover-elevate">
                     <i class="bi bi-send-check me-2"></i>Terbitkan Surat Jalan & Selesai
                 </button>
             </div>
@@ -77,27 +77,59 @@
 
 <!-- Modal Confirm Ekspedisi -->
 <div class="modal fade" id="modalEkspedisi" tabindex="-1" aria-labelledby="modalEkspedisiLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 rounded-4 shadow">
-      <div class="modal-header border-bottom-0 pb-0">
-        <h5 class="modal-title fw-bold" id="modalEkspedisiLabel">Konfirmasi Surat Jalan</h5>
-        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body py-4">
-        <div class="d-flex align-items-center mb-3">
-            <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                <i class="bi bi-truck fs-3"></i>
-            </div>
-            <div>
-                <h6 class="fw-bold mb-1">Data Armada Sudah Benar?</h6>
-                <p class="text-muted mb-0" style="font-size: 0.9rem;">Surat Jalan akan diterbitkan dan pesanan ini akan ditandai selesai sepenuhnya.</p>
-            </div>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+      <div class="modal-body p-4 text-center">
+        <!-- Premium Icon -->
+        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4 mt-2 shadow-sm" style="width: 80px; height: 80px;">
+            <i class="bi bi-check-lg" style="font-size: 3.5rem; -webkit-text-stroke: 2px;"></i>
         </div>
-      </div>
-      <div class="modal-footer border-top-0 pt-0">
-        <button type="button" class="btn btn-light rounded-pill px-4 py-2 fw-medium" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-warning rounded-pill px-4 py-2 fw-bold text-dark shadow-sm" onclick="document.getElementById('formEkspedisi').submit();">Ya, Selesai</button>
+        
+        <h4 class="fw-bold text-dark mb-2">Terbitkan Surat?</h4>
+        <p class="text-muted mb-4 small px-2">Data armada sudah benar? Surat jalan akan diterbitkan dan pesanan ini akan ditandai selesai sepenuhnya.</p>
+        
+        <div class="d-flex flex-column gap-2">
+            <button type="button" class="btn btn-green rounded-pill py-2 fw-bold shadow-sm w-100" onclick="processEkspedisi()">
+                <i class="bi bi-check-circle me-1"></i> Ya, Terbitkan
+            </button>
+            <button type="button" class="btn btn-light rounded-pill py-2 fw-medium w-100 text-secondary" data-bs-dismiss="modal">Batal</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modalEl = document.getElementById('modalEkspedisi');
+    if (modalEl) {
+        // Pindahkan modal ke body agar tidak freeze karena z-index
+        document.body.appendChild(modalEl);
+        
+        // Inisialisasi modal secara programatik
+        const ekspedisiModal = new bootstrap.Modal(modalEl);
+
+        // Intercept form submission agar HTML5 Validation berjalan dulu
+        document.getElementById('formEkspedisi').addEventListener('submit', function(e) {
+            if (!this.dataset.confirmed) {
+                e.preventDefault(); // Hentikan submit langsung
+                ekspedisiModal.show(); // Tampilkan konfirmasi
+            }
+        });
+
+        // Eksekusi ketika konfirmasi disetujui di dalam modal
+        window.processEkspedisi = function() {
+            let form = document.getElementById('formEkspedisi');
+            form.dataset.confirmed = 'true';
+            
+            // Sembunyikan modal agar UI tidak stuck
+            ekspedisiModal.hide();
+            
+            // Beri jeda animasi modal hilang sebelum pindah halaman
+            setTimeout(() => {
+                form.submit(); 
+            }, 150);
+        };
+    }
+});
+</script>

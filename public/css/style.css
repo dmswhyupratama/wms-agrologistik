@@ -54,6 +54,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
+    overflow-y: scroll; /* Fixes sidebar jumping size between long and short pages */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -99,12 +100,32 @@ p { color: var(--text-secondary); }
 
 /* ===== SIDEBAR — White + Green Accents ===== */
 .sidebar-green {
-    background-color: var(--surface);
+    background-color: var(--white);
     border-right: 1px solid var(--border-color);
+    transition: width 0.3s ease-in-out;
+}
+html.sidebar-collapsed #sidebarDesktop {
+    width: 80px !important;
+}
+
+html.sidebar-collapsed #sidebarDesktop span,
+html.sidebar-collapsed #sidebarDesktop small {
+    display: none !important;
+}
+
+html.sidebar-collapsed #sidebarDesktop .nav-link {
+    text-align: center;
+    padding: 0.8rem 0;
+    justify-content: center;
+}
+
+html.sidebar-collapsed #sidebarDesktop .nav-link i {
+    margin-right: 0 !important;
+    font-size: 1.3rem;
 }
 
 .sidebar-green .nav-link {
-    color: var(--gray-600);
+    color: var(--text-secondary);
     font-weight: 500;
     font-size: 0.875rem;
     padding: 0.55rem 0.9rem;
@@ -253,6 +274,40 @@ p { color: var(--text-secondary); }
     box-shadow: 0 4px 12px rgba(22,163,74,.3);
 }
 
+.btn-amber {
+    background: #F59E0B;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.25rem;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, .25);
+    transition: all 0.2s;
+}
+
+.btn-amber:hover {
+    background: #D97706;
+    color: white;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, .3);
+}
+
+.btn-blue {
+    background: #3B82F6;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.25rem;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, .25);
+    transition: all 0.2s;
+}
+
+.btn-blue:hover {
+    background: #2563EB;
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, .3);
+}
+
 /* ===== TABLES ===== */
 .table-clean th {
     text-transform: uppercase;
@@ -324,64 +379,3 @@ p { color: var(--text-secondary); }
 .text-green-dark { color: var(--green-800) !important; }
 .text-green      { color: var(--primary) !important; }
 .bg-green-light  { background: var(--green-50) !important; }
-
-/* ===== GLOBAL MICRO-ANIMATIONS (3D/SHINE EFFECT) ===== */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Auto-staggered entrance animations for cards and grid items */
-.card,
-.card-clean,
-.card-green,
-.action-card,
-.stat-chip,
-.log-item,
-.wk-form-card,
-.animate-box {
-    animation: fadeInUp 0.5s ease both;
-}
-
-/* Stagger delay for elements in a grid/list to create a wave effect */
-.card:nth-child(1), .action-card:nth-child(1), .log-item:nth-child(1) { animation-delay: 0.05s; }
-.card:nth-child(2), .action-card:nth-child(2), .log-item:nth-child(2) { animation-delay: 0.1s; }
-.card:nth-child(3), .action-card:nth-child(3), .log-item:nth-child(3) { animation-delay: 0.15s; }
-.card:nth-child(4), .action-card:nth-child(4), .log-item:nth-child(4) { animation-delay: 0.2s; }
-.card:nth-child(5), .action-card:nth-child(5), .log-item:nth-child(5) { animation-delay: 0.25s; }
-
-/* Global Button Shine/Glossy effect */
-.btn-green, 
-.btn-primary, 
-.btn-danger, 
-.btn-info,
-.btn-save-suhu, 
-.wk-btn-submit,
-.dp-btn-confirm {
-    position: relative;
-    overflow: hidden;
-}
-.btn-green::after, 
-.btn-primary::after, 
-.btn-danger::after, 
-.btn-info::after,
-.btn-save-suhu::after, 
-.wk-btn-submit::after,
-.dp-btn-confirm::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-    transition: left 0.5s ease;
-}
-.btn-green:hover::after, 
-.btn-primary:hover::after, 
-.btn-danger:hover::after, 
-.btn-info:hover::after,
-.btn-save-suhu:hover::after, 
-.wk-btn-submit:hover::after,
-.dp-btn-confirm:hover::after {
-    left: 100%;
-}
-

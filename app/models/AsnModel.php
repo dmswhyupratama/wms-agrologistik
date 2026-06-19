@@ -173,7 +173,7 @@ class AsnModel {
             FROM master_rak m
             JOIN master_ruangan r ON m.id_ruangan = r.id_ruangan
             LEFT JOIN asn_detail d ON m.kode_lokasi = d.lokasi_rak AND d.status_item = 'in_storage'
-            WHERE r.peruntukan_komoditas = :komoditas
+            WHERE r.peruntukan_komoditas LIKE CONCAT('%', :komoditas, '%')
             GROUP BY m.kode_lokasi, m.kapasitas_maksimal_kg
             HAVING (m.kapasitas_maksimal_kg - COALESCE(SUM(d.berat_aktual_kg), 0)) > 0
             ORDER BY m.kode_lokasi ASC

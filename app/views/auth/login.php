@@ -5,12 +5,12 @@
         background-size: cover !important;
     }
     
-    /* Dark overlay to make the card pop */
+    /* Light overlay so the background isn't too dark */
     body::before {
         content: "";
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(17, 24, 39, 0.75); 
+        background: rgba(255, 255, 255, 0.3); 
         z-index: -1;
     }
 

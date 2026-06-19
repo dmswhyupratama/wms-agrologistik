@@ -6,7 +6,7 @@
                 <h2 class="fw-bold text-success"><i class="bi bi-people-fill me-2"></i>Manajemen Pegawai</h2>
                 <p class="text-muted">Kelola akses *login* untuk Kru Lapangan, Quality Control, dan Admin Gudang.</p>
             </div>
-            <button type="button" class="btn btn-success fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTambahPegawai">
+            <button type="button" class="btn btn-blue fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTambahPegawai">
                 <i class="bi bi-person-plus-fill me-2"></i>Tambah Pegawai
             </button>
         </div>
@@ -105,10 +105,20 @@
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-success fw-bold rounded-pill">Simpan & Aktifkan Akun</button>
+                        <button type="submit" class="btn btn-blue fw-bold rounded-pill">Simpan & Aktifkan Akun</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modalTambahPegawai = document.getElementById('modalTambahPegawai');
+    if (modalTambahPegawai) {
+        // Pindahkan modal ke luar dari container agar tidak freeze (z-index issue)
+        document.body.appendChild(modalTambahPegawai);
+    }
+});
+</script>

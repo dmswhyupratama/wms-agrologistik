@@ -675,15 +675,17 @@
                                     </div>
                                 </div>
 
-                                <button type="button"
-                                    class="dp-btn-confirm disabled action-btn"
-                                    id="btn-ambil-<?= $item['id_picking']; ?>"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modalKonfirmasiAmbil"
-                                    data-url="<?= BASEURL; ?>/outbound/konfirmasiAmbil/<?= $item['id_picking']; ?>/<?= $data['id_so']; ?>">
-                                    <i class="bi bi-lock-fill" id="icon-<?= $item['id_picking']; ?>"></i>
-                                    Selesai Ambil
-                                </button>
+                                <div class="d-grid">
+                                    <button type="button" 
+                                       class="btn btn-primary rounded-pill py-2 fw-bold shadow-sm disabled action-btn hover-elevate" 
+                                       id="btn-ambil-<?= $item['id_picking']; ?>" 
+                                       data-bs-toggle="modal" 
+                                       data-bs-target="#modalKonfirmasiAmbil" 
+                                       data-url="<?= BASEURL; ?>/outbound/konfirmasiAmbil/<?= $item['id_picking']; ?>/<?= $data['id_so']; ?>">
+                                        <i class="bi bi-lock-fill me-2" id="icon-<?= $item['id_picking']; ?>"></i>Selesai Ambil
+                                    </button>
+                                </div>
+
                             <?php else : ?>
                                 <button class="dp-btn-completed" disabled>
                                     <i class="bi bi-check-circle-fill"></i> Telah Diambil
@@ -698,28 +700,28 @@
     <?php endif; ?>
 </div>
 
-<!-- Modal -->
-<div class="modal fade dp-modal" id="modalKonfirmasiAmbil" tabindex="-1" aria-hidden="true">
+<!-- Modal Confirm Ambil -->
+<div class="modal fade" id="modalKonfirmasiAmbil" tabindex="-1" aria-labelledby="modalKonfirmasiAmbilLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content shadow-lg">
-      <div class="modal-header">
-        <h5 class="modal-title">Konfirmasi Pengambilan</h5>
-        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"></button>
+    <div class="modal-content border-0 rounded-4 shadow">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold" id="modalKonfirmasiAmbilLabel">Konfirmasi Pengambilan</h5>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div class="d-flex align-items-start gap-3">
-            <div class="dp-m-icon"><i class="bi bi-check2-circle"></i></div>
+      <div class="modal-body py-4">
+        <div class="d-flex align-items-center mb-3">
+            <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                <i class="bi bi-check2-circle fs-3"></i>
+            </div>
             <div>
                 <h6 class="fw-bold mb-1">Barang Telah Diambil?</h6>
-                <p class="text-muted mb-0" style="font-size:0.88rem; line-height:1.6;">Konfirmasi bahwa barang fisik telah Anda ambil dari rak dan siap dipacking.</p>
+                <p class="text-muted mb-0" style="font-size: 0.9rem;">Konfirmasi bahwa barang fisik telah Anda ambil dari rak dan siap dipacking.</p>
             </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="dp-m-btn-cancel" data-bs-dismiss="modal">Batal</button>
-        <a href="#" id="btnConfirmKonfirmasiAmbil" class="dp-m-btn-ok">
-            <i class="bi bi-check2-all me-1"></i>Ya, Selesai Ambil
-        </a>
+      <div class="modal-footer border-top-0 pt-0">
+        <button type="button" class="btn btn-light rounded-pill px-4 fw-medium" data-bs-dismiss="modal">Batal</button>
+        <a href="#" id="btnConfirmKonfirmasiAmbil" class="btn btn-success rounded-pill px-4 fw-bold">Ya, Selesai Ambil</a>
       </div>
     </div>
   </div>
@@ -747,13 +749,13 @@
 
             if(inputVal === targetSKU) {
                 btnAction.classList.remove('disabled');
-                btnAction.classList.add('unlocked');
+                btnAction.classList.replace('btn-primary', 'btn-success'); 
                 errorMsg.classList.add('d-none');
                 iconBtn.className = 'bi bi-unlock-fill';
                 this.style.color = 'var(--green-700)';
             } else {
                 btnAction.classList.add('disabled');
-                btnAction.classList.remove('unlocked');
+                btnAction.classList.replace('btn-success', 'btn-primary');
                 errorMsg.classList.remove('d-none');
                 iconBtn.className = 'bi bi-lock-fill';
                 this.style.color = '#DC2626';
@@ -762,10 +764,11 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('modalKonfirmasiAmbil');
-        if (modal) {
-            modal.addEventListener('show.bs.modal', event => {
-                const url = event.relatedTarget.getAttribute('data-url');
+        const modalKonfirmasi = document.getElementById('modalKonfirmasiAmbil');
+        if (modalKonfirmasi) {
+            modalKonfirmasi.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
+                const url = button.getAttribute('data-url');
                 document.getElementById('btnConfirmKonfirmasiAmbil').setAttribute('href', url);
             });
         }
