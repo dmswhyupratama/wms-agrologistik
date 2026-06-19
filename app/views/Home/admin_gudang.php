@@ -23,7 +23,7 @@
     
     <!-- HEADER & AKSI CEPAT -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
-        <div>
+        <div class="animate-box">
             <div class="d-flex align-items-center gap-2 mb-1">
                 <h2 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.5px;">Overview</h2>
                 <span class="badge bg-green-light text-green-dark border px-2 py-1 fs-7 rounded-pill fw-medium">Admin Gudang</span>
@@ -32,13 +32,13 @@
         </div>
         
         <div class="d-flex flex-wrap align-items-center gap-2">
-            <a href="<?= BASEURL; ?>/admin/inbound" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm">
+            <a href="<?= BASEURL; ?>/admin/inbound" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm animate-box">
                 <i class="bi bi-box-arrow-in-down me-1"></i> Inbound
             </a>
-            <a href="<?= BASEURL; ?>/admin/putaway" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm">
+            <a href="<?= BASEURL; ?>/admin/putaway" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm animate-box">
                 <i class="bi bi-layers me-1"></i> Putaway
             </a>
-            <a href="<?= BASEURL; ?>/outbound" class="btn btn-sm btn-green rounded-pill px-3 fw-medium shadow-sm">
+            <a href="<?= BASEURL; ?>/outbound" class="btn btn-sm btn-green rounded-pill px-3 fw-medium shadow-sm animate-box">
                 <i class="bi bi-truck me-1"></i> Outbound (DO)
             </a>
         </div>
@@ -141,11 +141,11 @@
         
         <!-- Inbound Terbaru -->
         <div class="col-lg-6">
-            <div class="d-flex justify-content-between align-items-end mb-3 px-1">
+            <div class="d-flex justify-content-between align-items-end mb-3 px-1 animate-box">
                 <h6 class="fw-bold text-dark mb-0">Inbound Terbaru</h6>
                 <a href="<?= BASEURL; ?>/admin/inbound" class="text-muted text-decoration-none fw-medium hover-elevate px-2 py-1 rounded" style="font-size: 0.8rem; background: var(--gray-100);">Lihat Semua</a>
             </div>
-            <div class="bg-white rounded-4 shadow-sm p-4">
+            <div class="bg-white rounded-4 shadow-sm p-4 animate-box">
                 <div class="table-responsive">
                     <table class="table table-borderless table-hover align-middle mb-0" style="font-size: 0.9rem;">
                         <thead class="text-muted" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -196,11 +196,11 @@
 
         <!-- Outbound Terbaru -->
         <div class="col-lg-6">
-            <div class="d-flex justify-content-between align-items-end mb-3 px-1">
+            <div class="d-flex justify-content-between align-items-end mb-3 px-1 animate-box">
                 <h6 class="fw-bold text-dark mb-0">Outbound Terbaru</h6>
                 <a href="<?= BASEURL; ?>/outbound" class="text-muted text-decoration-none fw-medium hover-elevate px-2 py-1 rounded" style="font-size: 0.8rem; background: var(--gray-100);">Lihat Semua</a>
             </div>
-            <div class="bg-white rounded-4 shadow-sm p-4">
+            <div class="bg-white rounded-4 shadow-sm p-4 animate-box">
                 <div class="table-responsive">
                     <table class="table table-borderless table-hover align-middle mb-0" style="font-size: 0.9rem;">
                         <thead class="text-muted" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">

@@ -12,6 +12,14 @@
         </div>
     </div>
 
+    <style>
+        /* Hilangkan animasi shine (putih) pada button di dalam tabel saat diklik/di-hover */
+        .table .btn::after {
+            display: none !important;
+            animation: none !important;
+        }
+    </style>
+
     <div class="bg-white rounded-4 shadow-sm p-4 border-0 animate-box">
         <div class="table-responsive">
             <table class="table table-borderless table-hover align-middle mb-0" style="font-size: 0.95rem;">

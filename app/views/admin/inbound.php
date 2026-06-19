@@ -7,6 +7,14 @@
         </div>
     </div>
 
+    <style>
+        /* Hilangkan animasi shine (putih) pada button di dalam tabel saat diklik/di-hover */
+        .table .btn::after {
+            display: none !important;
+            animation: none !important;
+        }
+    </style>
+
     <div class="bg-white rounded-4 shadow-sm p-4 border-0 animate-box">
         <div class="table-responsive">
             <table class="table table-borderless table-hover align-middle mb-0" style="font-size: 0.95rem;">
@@ -30,7 +38,7 @@
                         </td>
                     </tr>
                     <?php else : ?>
-                        <?php foreach( $data['asn'] as $asn ) : ?>
+                        <?php foreach( array_reverse($data['asn']) as $asn ) : ?>
                         <tr style="border-bottom: 1px solid #f9fafb;">
                             <td class="ps-3 py-3">
                                 <span class="fw-bold text-dark">ASN-<?= str_pad($asn['id_asn'], 3, '0', STR_PAD_LEFT); ?></span>

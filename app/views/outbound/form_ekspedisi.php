@@ -1,15 +1,15 @@
 <div class="container-fluid mt-4 mb-5 px-lg-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-        <div>
+        <div class="animate-box">
             <h2 class="fw-bold text-dark mb-1" style="letter-spacing: -0.5px;"><i class="bi bi-truck me-2 text-green"></i>Proses Ekspedisi</h2>
             <p class="text-muted mb-0" style="font-size: 0.95rem;">Catat data armada pengiriman untuk menerbitkan surat jalan dan menyelesaikan pesanan.</p>
         </div>
-        <a href="<?= BASEURL; ?>/outbound" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm">
+        <a href="<?= BASEURL; ?>/outbound" class="btn btn-sm btn-light border rounded-pill px-3 fw-medium hover-elevate text-secondary shadow-sm animate-box">
             <i class="bi bi-arrow-left me-1"></i> Kembali
         </a>
     </div>
 
-    <div class="bg-white rounded-4 shadow-sm p-4 border-0 mb-4">
+    <div class="bg-white rounded-4 shadow-sm p-4 border-0 mb-4 animate-box">
         <h6 class="fw-bold text-dark mb-4 pb-2 border-bottom"><i class="bi bi-info-circle me-2 text-primary"></i>Informasi Muatan (Siap Kirim)</h6>
         
         <div class="row g-4 mb-2">
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-4 shadow-sm p-4 border-0">
+    <div class="bg-white rounded-4 shadow-sm p-4 border-0 animate-box">
         <form action="<?= BASEURL; ?>/outbound/simpanEkspedisi" method="POST" id="formEkspedisi">
             <input type="hidden" name="id_so" value="<?= $data['so']['id_so']; ?>">
 
