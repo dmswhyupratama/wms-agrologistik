@@ -5,8 +5,8 @@ class Admin extends Controller {
     // Dashboard Manajemen Inbound (Validasi ASN)
     public function inbound()
     {
-        // Proteksi Lapis Baja: Hanya akun Admin Gudang yang boleh masuk
-        if( !isset($_SESSION['id_user']) || $_SESSION['role'] != 'admin_gudang' ) {
+        // Proteksi: Hanya akun Admin Gudang dan Manajer yang boleh masuk
+        if( !isset($_SESSION['id_user']) || !in_array($_SESSION['role'], ['admin_gudang', 'manajer']) ) {
             header('Location: ' . BASEURL . '/home');
             exit;
         }

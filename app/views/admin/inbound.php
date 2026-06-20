@@ -26,13 +26,15 @@
                         <th class="fw-semibold pb-3">Komoditas (Buah)</th>
                         <th class="fw-semibold pb-3">Total Estimasi</th>
                         <th class="fw-semibold pb-3">Status</th>
+                        <?php if($_SESSION['role'] == 'admin_gudang') : ?>
                         <th class="fw-semibold pb-3 text-center pe-3">Aksi / Tindakan</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if( empty($data['asn']) ) : ?>
                     <tr>
-                        <td colspan="7" class="text-center py-5">
+                        <td colspan="<?= ($_SESSION['role'] == 'admin_gudang') ? '7' : '6' ?>" class="text-center py-5">
                             <i class="bi bi-inbox fs-1 text-muted opacity-25 d-block mb-3"></i>
                             <span class="text-muted">Belum ada pengajuan masuk dari pemasok.</span>
                         </td>
@@ -67,6 +69,7 @@
                                 ?>
                             </td>
                             
+                            <?php if($_SESSION['role'] == 'admin_gudang') : ?>
                             <td class="py-3 text-center pe-3">
                                 <div class="d-flex justify-content-center gap-2">
                                 <?php if($asn['status_jadwal'] == 'menunggu') : ?>
@@ -84,6 +87,7 @@
                                 <?php endif; ?>
                                 </div>
                             </td>
+                            <?php endif; ?>
                         </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

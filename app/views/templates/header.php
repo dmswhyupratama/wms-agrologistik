@@ -100,7 +100,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if($_SESSION['role'] == 'admin_gudang') : ?>
+        <?php if(in_array($_SESSION['role'], ['admin_gudang', 'manajer'])) : ?>
         <li class="nav-item">
             <a class="nav-link <?= ($data['judul'] == 'Manajemen Inbound') ? 'active-menu' : ''; ?>" href="<?= BASEURL; ?>/admin/inbound">
                 <i class="bi bi-box-arrow-in-right me-2"></i> <span>Inbound</span>
